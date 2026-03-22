@@ -1,0 +1,5 @@
+sessions_band,enrollments,avg_hours_spent,avg_progress_percent,completion_rate_pct
+1-2 sessions,3638,0.35,3.72,0.0
+3-5 sessions,353,4.54,49.66,0.0
+6-8 sessions,879,13.8,93.7,96.7
+9+ sessions,1930,13.67,94.55,99.9

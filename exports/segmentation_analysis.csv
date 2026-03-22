@@ -1,0 +1,100 @@
+region,age_group,device_type,enrollments,completion_rate_pct,engagement_rate_pct,average_satisfaction,avg_sessions
+Mpumalanga,45+,Desktop,1,100.0,100.0,5.0,10.0
+Northern Cape,35-44,Tablet,1,100.0,100.0,5.0,13.0
+Northern Cape,35-44,Desktop,5,80.0,80.0,4.5,8.0
+North West,35-44,Tablet,5,80.0,80.0,4.28,7.4
+Northern Cape,18-24,Tablet,4,75.0,75.0,4.28,8.0
+Free State,18-24,Tablet,3,66.67,66.67,4.13,7.0
+North West,35-44,Desktop,12,66.67,66.67,3.92,6.33
+Eastern Cape,35-44,Tablet,17,64.71,70.59,3.85,6.88
+Gauteng,45+,Desktop,14,64.29,64.29,3.79,6.64
+Western Cape,45+,Desktop,11,63.64,63.64,4.01,6.64
+Mpumalanga,18-24,Tablet,8,62.5,62.5,3.89,5.0
+Mpumalanga,35-44,Tablet,5,60.0,80.0,4.28,7.2
+Eastern Cape,18-24,Tablet,10,60.0,80.0,4.16,8.1
+Eastern Cape,35-44,Desktop,40,57.5,67.5,3.98,6.03
+Western Cape,35-44,Tablet,18,55.56,55.56,3.61,6.39
+Limpopo,25-34,Desktop,91,54.95,60.44,3.69,5.89
+Eastern Cape,18-24,Desktop,53,54.72,62.26,3.75,6.17
+KwaZulu-Natal,45+,Desktop,11,54.55,54.55,3.33,6.18
+Gauteng,18-24,Desktop,232,54.31,59.91,3.65,5.81
+Mpumalanga,35-44,Desktop,26,53.85,57.69,3.59,5.69
+Western Cape,18-24,Desktop,121,53.72,60.33,3.65,5.92
+Western Cape,35-44,Desktop,87,52.87,59.77,3.66,5.71
+Free State,25-34,Desktop,59,50.85,50.85,3.46,5.31
+Eastern Cape,45+,Desktop,6,50.0,66.67,3.67,4.33
+North West,45+,Desktop,2,50.0,50.0,3.55,6.0
+Eastern Cape,45+,Mobile,10,50.0,50.0,3.48,5.2
+North West,45+,Mobile,4,50.0,50.0,3.48,5.25
+Eastern Cape,25-34,Tablet,22,50.0,50.0,3.38,5.05
+Mpumalanga,25-34,Tablet,20,50.0,50.0,3.34,4.95
+Gauteng,35-44,Tablet,37,48.65,54.05,3.44,4.32
+KwaZulu-Natal,35-44,Desktop,85,48.24,52.94,3.45,4.73
+Eastern Cape,25-34,Desktop,121,47.93,53.72,3.51,4.71
+Gauteng,45+,Mobile,21,47.62,57.14,3.6,5.71
+Limpopo,18-24,Desktop,70,47.14,51.43,3.37,5.16
+KwaZulu-Natal,45+,Mobile,17,47.06,52.94,3.47,3.88
+Limpopo,35-44,Desktop,32,46.88,50.0,3.4,5.0
+Gauteng,25-34,Desktop,400,46.75,50.75,3.41,5.13
+Mpumalanga,18-24,Desktop,37,45.95,48.65,3.28,4.73
+Free State,18-24,Mobile,35,45.71,54.29,3.41,4.74
+Western Cape,25-34,Tablet,57,45.61,50.88,3.46,4.68
+Northern Cape,25-34,Desktop,11,45.45,54.55,3.42,5.27
+Free State,18-24,Desktop,40,45.0,50.0,3.41,5.03
+Western Cape,18-24,Tablet,29,44.83,51.72,3.38,4.93
+Western Cape,25-34,Desktop,181,44.75,48.07,3.33,4.83
+Gauteng,35-44,Desktop,173,44.51,49.13,3.32,4.66
+North West,18-24,Desktop,25,44.0,52.0,3.2,5.0
+Gauteng,18-24,Tablet,73,42.47,46.58,3.33,4.84
+KwaZulu-Natal,25-34,Tablet,45,42.22,55.56,3.43,4.82
+Eastern Cape,35-44,Mobile,53,41.51,49.06,3.33,4.49
+KwaZulu-Natal,18-24,Tablet,34,41.18,41.18,3.3,4.65
+Limpopo,18-24,Mobile,83,40.96,49.4,3.2,4.36
+KwaZulu-Natal,18-24,Desktop,127,40.94,45.67,3.2,4.43
+North West,25-34,Desktop,42,40.48,52.38,3.32,5.0
+KwaZulu-Natal,25-34,Desktop,187,40.11,45.45,3.23,4.39
+Free State,25-34,Mobile,75,40.0,48.0,3.23,4.24
+Eastern Cape,45+,Tablet,5,40.0,40.0,3.0,3.8
+Mpumalanga,25-34,Mobile,118,39.83,46.61,3.22,4.33
+Limpopo,35-44,Mobile,66,39.39,42.42,3.17,4.44
+Eastern Cape,18-24,Mobile,99,39.39,41.41,3.14,3.94
+Western Cape,35-44,Mobile,150,39.33,42.67,3.14,4.17
+KwaZulu-Natal,35-44,Tablet,18,38.89,38.89,3.08,3.72
+Mpumalanga,25-34,Desktop,70,38.57,40.0,3.06,4.33
+Limpopo,25-34,Mobile,135,38.52,40.74,3.1,4.24
+Free State,35-44,Desktop,13,38.46,38.46,2.99,3.92
+Mpumalanga,35-44,Mobile,60,38.33,43.33,3.19,3.82
+Western Cape,18-24,Mobile,192,38.02,48.44,3.17,4.35
+Gauteng,25-34,Mobile,635,37.8,42.68,3.12,4.15
+Northern Cape,18-24,Desktop,8,37.5,37.5,2.94,3.38
+North West,35-44,Mobile,19,36.84,47.37,3.01,4.47
+KwaZulu-Natal,35-44,Mobile,124,36.29,41.94,3.09,4.26
+North West,18-24,Mobile,25,36.0,36.0,3.01,4.2
+Western Cape,25-34,Mobile,290,35.86,43.79,3.06,4.14
+Mpumalanga,18-24,Mobile,85,35.29,38.82,3.06,3.78
+KwaZulu-Natal,25-34,Mobile,329,34.95,39.21,3.0,3.95
+Gauteng,35-44,Mobile,267,34.46,41.57,3.07,3.9
+Gauteng,25-34,Tablet,114,34.21,38.6,3.02,3.82
+KwaZulu-Natal,18-24,Mobile,188,33.51,38.3,2.96,3.75
+Limpopo,18-24,Tablet,6,33.33,50.0,3.0,3.5
+Eastern Cape,25-34,Mobile,162,33.33,38.27,2.99,3.88
+Western Cape,45+,Mobile,15,33.33,33.33,2.91,3.93
+Free State,25-34,Tablet,9,33.33,33.33,2.8,3.78
+Limpopo,25-34,Tablet,21,33.33,33.33,2.77,3.67
+Gauteng,18-24,Mobile,389,32.65,42.42,2.99,3.87
+Free State,35-44,Mobile,41,31.71,34.15,2.87,3.51
+Northern Cape,25-34,Mobile,19,31.58,36.84,2.99,3.37
+North West,25-34,Mobile,59,28.81,33.9,2.85,3.0
+Limpopo,35-44,Tablet,15,26.67,26.67,2.73,3.53
+North West,25-34,Tablet,4,25.0,25.0,3.02,2.25
+Limpopo,45+,Mobile,8,25.0,50.0,2.96,4.13
+Northern Cape,35-44,Mobile,4,25.0,25.0,2.48,2.75
+Mpumalanga,45+,Mobile,10,20.0,40.0,3.03,3.7
+Gauteng,45+,Tablet,5,20.0,20.0,2.86,2.4
+North West,18-24,Tablet,5,20.0,20.0,2.56,2.0
+Northern Cape,18-24,Mobile,8,12.5,25.0,2.77,2.25
+Free State,45+,Mobile,11,9.09,18.18,2.45,1.82
+Northern Cape,45+,Mobile,2,0.0,50.0,2.9,2.5
+Western Cape,45+,Tablet,4,0.0,25.0,2.67,0.75
+Limpopo,45+,Desktop,3,0.0,33.33,2.2,1.33
+Free State,35-44,Tablet,2,0.0,0.0,1.85,0.0

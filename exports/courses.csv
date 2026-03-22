@@ -1,0 +1,11 @@
+course_id,course_name,category,difficulty_level,duration_hours
+C001,Data Literacy for Teams,Analytics Foundations,Beginner,8
+C002,Excel for Operations,Productivity,Beginner,10
+C003,SQL for Product Metrics,Data Analysis,Intermediate,18
+C004,Power BI Storytelling,Business Intelligence,Intermediate,16
+C005,Product Analytics Fundamentals,Product Analytics,Intermediate,14
+C006,Python for Reporting Automation,Data Analysis,Advanced,22
+C007,Cohort Analysis in Practice,Product Analytics,Advanced,20
+C008,Customer Research for EdTech,Product Strategy,Intermediate,12
+C009,Experimentation and A/B Testing,Product Analytics,Advanced,24
+C010,Dashboard Design for Execs,Business Intelligence,Beginner,9

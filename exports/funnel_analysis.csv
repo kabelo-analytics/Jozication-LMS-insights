@@ -1,0 +1,6 @@
+stage,stage_volume,previous_stage_volume,conversion_rate_from_previous_stage,drop_off_volume,drop_off_pct_from_previous_stage
+Visitors,9240,,,,
+Enrollments,6800,9240.0,0.7359,2440.0,0.2641
+Started,3700,6800.0,0.5441,3100.0,0.4559
+Active,3153,3700.0,0.8522,547.0,0.1478
+Completed,2778,3153.0,0.8811,375.0,0.1189

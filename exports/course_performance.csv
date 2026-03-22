@@ -1,0 +1,11 @@
+course_id,course_name,category,difficulty_level,duration_hours,enrollments,completion_rate_pct,engagement_rate_pct,average_satisfaction,non_completed_enrollments
+C002,Excel for Operations,Productivity,Beginner,10.0,620,60.16,63.23,3.83,247
+C010,Dashboard Design for Execs,Business Intelligence,Beginner,9.0,655,59.85,63.21,3.83,263
+C001,Data Literacy for Teams,Analytics Foundations,Beginner,8.0,566,59.72,62.19,3.81,228
+C005,Product Analytics Fundamentals,Product Analytics,Intermediate,14.0,715,43.92,48.11,3.31,401
+C008,Customer Research for EdTech,Product Strategy,Intermediate,12.0,566,41.87,46.11,3.24,329
+C004,Power BI Storytelling,Business Intelligence,Intermediate,16.0,691,41.82,48.34,3.31,402
+C003,SQL for Product Metrics,Data Analysis,Intermediate,18.0,737,39.48,45.45,3.22,446
+C007,Cohort Analysis in Practice,Product Analytics,Advanced,20.0,753,25.9,32.67,2.74,558
+C009,Experimentation and A/B Testing,Product Analytics,Advanced,24.0,687,23.44,32.02,2.69,526
+C006,Python for Reporting Automation,Data Analysis,Advanced,22.0,810,23.21,31.48,2.65,622

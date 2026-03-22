@@ -1,0 +1,4 @@
+device_type,enrollments,completion_rate_pct,engagement_rate_pct,average_satisfaction
+Desktop,2396,47.75,52.59,3.44
+Tablet,596,42.62,47.15,3.29
+Mobile,3808,36.24,42.33,3.08
