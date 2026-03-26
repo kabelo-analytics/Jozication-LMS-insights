@@ -1,789 +1,808 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Jozication LMS — Analytics Report</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Jozication LMS - Analytics Report</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
   :root {
-    --bg: #0a0c10;
-    --surface: #10131a;
-    --surface2: #161b26;
-    --border: #1e2535;
-    --accent: #00e5c4;
-    --accent2: #ff6b6b;
-    --accent3: #f5c842;
-    --accent4: #7c85ff;
-    --text: #e8eaf0;
-    --muted: #6b7494;
-    --font-head: 'Syne', sans-serif;
-    --font-mono: 'DM Mono', monospace;
+    --bg: #f8f9fa;
+    --surface: #ffffff;
+    --surface2: #f4f7fb;
+    --border: #d9e2ec;
+    --accent: #3b82f6;
+    --accent2: #ef4444;
+    --accent3: #10b981;
+    --accent4: #0ea5e9;
+    --warning: #f59e0b;
+    --text: #1f2937;
+    --text-strong: #0f172a;
+    --muted: #5b6472;
+    --shadow: 0 16px 32px rgba(15, 23, 42, 0.06);
+    --font-head: 'Plus Jakarta Sans', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--text); font-family: var(--font-mono); font-size: 13px; }
-
-  /* HEADER */
-  header {
-    padding: 32px 48px 24px;
-    border-bottom: 1px solid var(--border);
-    display: flex; align-items: flex-end; justify-content: space-between;
-    background: linear-gradient(135deg, #0d1520 0%, #0a0c10 60%);
+  html { scroll-behavior: smooth; }
+  body {
+    background:
+      radial-gradient(circle at top left, rgba(59, 130, 246, 0.12), transparent 28%),
+      radial-gradient(circle at top right, rgba(16, 185, 129, 0.12), transparent 24%),
+      linear-gradient(180deg, #fafdff 0%, var(--bg) 32%, #f6f8fb 100%);
+    color: var(--text);
+    font-family: var(--font-head);
+    font-size: 14px;
+    line-height: 1.6;
   }
-  .brand { display: flex; flex-direction: column; gap: 4px; }
-  .brand-tag { font-size: 10px; letter-spacing: 4px; color: var(--accent); text-transform: uppercase; }
-  .brand-title { font-family: var(--font-head); font-size: 28px; font-weight: 800; letter-spacing: -0.5px; }
-  .brand-title span { color: var(--accent); }
-  .brand-sub { color: var(--muted); font-size: 11px; letter-spacing: 1px; }
-  .header-meta { text-align: right; }
-  .header-meta div { color: var(--muted); font-size: 11px; margin-bottom: 4px; }
-  .header-meta strong { color: var(--accent3); }
-
-  /* NAV */
-  nav {
-    display: flex; gap: 0;
-    background: var(--surface);
+  .page-shell { max-width: 1440px; margin: 0 auto; padding: 32px 32px 40px; }
+  .topbar {
+    background: rgba(255, 255, 255, 0.82);
+    border: 1px solid rgba(217, 226, 236, 0.9);
+    border-radius: 28px;
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(16px);
+    overflow: hidden;
+  }
+  header {
+    padding: 38px 42px 30px;
     border-bottom: 1px solid var(--border);
-    padding: 0 48px;
-    overflow-x: auto;
+    display: flex; align-items: flex-end; justify-content: space-between; gap: 28px;
+    background: linear-gradient(135deg, rgba(239, 246, 255, 0.96) 0%, rgba(255, 255, 255, 0.98) 52%, rgba(236, 253, 245, 0.92) 100%);
+  }
+  .brand { display: flex; flex-direction: column; gap: 10px; max-width: 760px; }
+  .brand-tag {
+    display: inline-flex; align-items: center; gap: 8px; width: fit-content;
+    padding: 8px 14px; border-radius: 999px; background: rgba(59, 130, 246, 0.1);
+    color: #2563eb; font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+  }
+  .brand-title {
+    font-family: var(--font-head); font-size: clamp(32px, 4vw, 52px); font-weight: 800;
+    letter-spacing: -0.04em; line-height: 1; color: var(--text-strong);
+  }
+  .brand-title span { color: var(--accent); }
+  .brand-sub { color: var(--muted); font-size: 15px; line-height: 1.8; max-width: 640px; }
+  .header-meta {
+    min-width: 290px; padding: 22px 24px; border: 1px solid var(--border);
+    border-radius: 18px; background: rgba(255, 255, 255, 0.88);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
+  }
+  .header-meta div + div { margin-top: 10px; }
+  .header-meta span {
+    display: block; color: var(--muted); font-family: var(--font-mono); font-size: 11px;
+    letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 3px;
+  }
+  .header-meta strong { color: var(--text-strong); font-size: 14px; font-weight: 700; }
+  nav {
+    display: flex; gap: 12px; background: rgba(248, 250, 252, 0.9);
+    padding: 18px 24px; overflow-x: auto;
   }
   .nav-btn {
-    padding: 14px 22px; border: none; background: none;
-    color: var(--muted); font-family: var(--font-mono); font-size: 11px;
-    letter-spacing: 2px; text-transform: uppercase; cursor: pointer;
-    border-bottom: 2px solid transparent; transition: all 0.2s;
-    white-space: nowrap;
+    padding: 12px 18px; border: 1px solid transparent; border-radius: 999px; background: transparent;
+    color: var(--muted); font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; white-space: nowrap;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
   }
-  .nav-btn:hover { color: var(--text); }
-  .nav-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
-
-  /* LAYOUT */
-  main { padding: 40px 48px; max-width: 1400px; }
-  .section { display: none; animation: fadeIn 0.3s ease; }
+  .nav-btn:hover {
+    color: var(--text-strong); background: rgba(59, 130, 246, 0.08);
+    border-color: rgba(59, 130, 246, 0.18); transform: translateY(-1px);
+  }
+  .nav-btn.active {
+    color: #fff; background: var(--accent); border-color: var(--accent);
+    box-shadow: 0 12px 24px rgba(59, 130, 246, 0.18);
+  }
+  main { padding: 40px 6px 0; }
+  .section { display: none; animation: fadeIn 0.28s ease; }
   .section.active { display: block; }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-
-  .section-title {
-    font-family: var(--font-head); font-size: 22px; font-weight: 700;
-    margin-bottom: 6px; letter-spacing: -0.3px;
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  .section-header {
+    display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between;
+    gap: 18px; margin-bottom: 30px;
   }
-  .section-desc { color: var(--muted); font-size: 12px; margin-bottom: 32px; line-height: 1.6; }
-
-  /* KPI CARDS */
-  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px; }
+  .section-title {
+    font-family: var(--font-head); font-size: clamp(28px, 3vw, 36px); font-weight: 800;
+    margin-bottom: 8px; letter-spacing: -0.04em; line-height: 1.08; color: var(--text-strong);
+  }
+  .section-desc { color: var(--muted); font-size: 15px; line-height: 1.8; max-width: 860px; }
+  .section-chip {
+    display: inline-flex; align-items: center; padding: 10px 14px; border-radius: 999px;
+    border: 1px solid var(--border); background: rgba(255, 255, 255, 0.82); color: var(--text-strong);
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+  }
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; margin-bottom: 28px; }
   .kpi-card {
-    background: var(--surface); border: 1px solid var(--border);
-    padding: 20px 24px; border-radius: 8px; position: relative; overflow: hidden;
+    position: relative; padding: 28px 28px 24px; border: 1px solid var(--border); border-radius: 18px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.96)); box-shadow: var(--shadow); overflow: hidden;
   }
   .kpi-card::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    content: ''; position: absolute; inset: 0 0 auto 0; height: 5px;
+    background: linear-gradient(90deg, var(--card-accent), rgba(255, 255, 255, 0));
   }
-  .kpi-card.c1::before { background: var(--accent); }
-  .kpi-card.c2::before { background: var(--accent3); }
-  .kpi-card.c3::before { background: var(--accent4); }
-  .kpi-card.c4::before { background: var(--accent2); }
-  .kpi-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
-  .kpi-value { font-family: var(--font-head); font-size: 32px; font-weight: 800; line-height: 1; margin-bottom: 6px; }
-  .kpi-card.c1 .kpi-value { color: var(--accent); }
-  .kpi-card.c2 .kpi-value { color: var(--accent3); }
-  .kpi-card.c3 .kpi-value { color: var(--accent4); }
-  .kpi-card.c4 .kpi-value { color: var(--accent2); }
-  .kpi-sub { font-size: 11px; color: var(--muted); }
-
-  /* GRID LAYOUTS */
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
-  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-bottom: 20px; }
-  .grid-2-1 { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; margin-bottom: 20px; }
-  .grid-1-2 { display: grid; grid-template-columns: 1fr 2fr; gap: 20px; margin-bottom: 20px; }
-
-  /* CHART CARDS */
+  .kpi-card.c1 { --card-accent: var(--accent); }
+  .kpi-card.c2 { --card-accent: var(--accent3); }
+  .kpi-card.c3 { --card-accent: var(--accent4); }
+  .kpi-card.c4 { --card-accent: var(--accent2); }
+  .kpi-label {
+    color: var(--muted); font-family: var(--font-mono); font-size: 11px;
+    letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px;
+  }
+  .kpi-value {
+    color: var(--card-accent); font-size: clamp(30px, 3.2vw, 42px); line-height: 1;
+    letter-spacing: -0.04em; font-weight: 800; margin-bottom: 12px;
+  }
+  .kpi-sub { color: var(--muted); font-size: 13px; line-height: 1.7; }
+  .grid-2, .grid-3, .grid-2-1, .grid-1-2 { display: grid; gap: 22px; margin-bottom: 22px; }
+  .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .grid-2-1 { grid-template-columns: minmax(0, 2fr) minmax(320px, 1fr); }
+  .grid-1-2 { grid-template-columns: minmax(320px, 1fr) minmax(0, 2fr); }
   .card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 8px; padding: 24px; 
+    padding: 28px; border: 1px solid var(--border); border-radius: 24px;
+    background: rgba(255, 255, 255, 0.96); box-shadow: var(--shadow);
   }
-  .card-title { font-family: var(--font-head); font-size: 14px; font-weight: 700; margin-bottom: 4px; }
-  .card-sub { font-size: 11px; color: var(--muted); margin-bottom: 20px; }
-  .chart-wrap { position: relative; }
-
-  /* FUNNEL */
-  .funnel-wrap { padding: 8px 0; }
-  .funnel-row { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; }
-  .funnel-label { width: 100px; font-size: 11px; color: var(--muted); text-align: right; letter-spacing: 1px; text-transform: uppercase; }
-  .funnel-bar-wrap { flex: 1; height: 36px; background: var(--surface2); border-radius: 4px; overflow: hidden; position: relative; }
-  .funnel-bar { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 12px; font-size: 12px; font-weight: 500; transition: width 1s ease; }
-  .funnel-stats { width: 120px; text-align: right; font-size: 11px; }
-  .funnel-vol { font-family: var(--font-head); font-size: 16px; font-weight: 700; }
-  .funnel-conv { color: var(--muted); font-size: 10px; }
-  .drop-badge { font-size: 10px; color: var(--accent2); }
-
-  /* TABLE */
-  table { width: 100%; border-collapse: collapse; font-size: 12px; }
-  th { text-align: left; padding: 8px 12px; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--border); }
-  td { padding: 10px 12px; border-bottom: 1px solid var(--border); }
+  .card-title { color: var(--text-strong); font-size: 20px; line-height: 1.25; letter-spacing: -0.03em; font-weight: 700; margin-bottom: 8px; }
+  .card-sub { color: var(--muted); font-size: 13px; line-height: 1.7; margin-bottom: 22px; }
+  .chart-wrap { position: relative; min-height: 200px; }
+  .table-scroll { overflow-x: auto; border-radius: 16px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th {
+    padding: 14px; text-align: left; color: var(--muted); font-family: var(--font-mono); font-size: 11px;
+    font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; border-bottom: 1px solid var(--border);
+    background: rgba(248, 250, 252, 0.9);
+  }
+  td { padding: 16px 14px; border-bottom: 1px solid rgba(217, 226, 236, 0.92); color: var(--text); vertical-align: middle; }
   tr:last-child td { border-bottom: none; }
-  tr:hover td { background: var(--surface2); }
+  tr:hover td { background: rgba(59, 130, 246, 0.045); }
   .badge {
-    display: inline-block; padding: 2px 8px; border-radius: 20px;
-    font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
+    display: inline-flex; align-items: center; justify-content: center; padding: 6px 11px;
+    border-radius: 999px; font-family: var(--font-mono); font-size: 10px; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase; border: 1px solid transparent;
   }
-  .badge-green { background: rgba(0,229,196,0.12); color: var(--accent); }
-  .badge-yellow { background: rgba(245,200,66,0.12); color: var(--accent3); }
-  .badge-red { background: rgba(255,107,107,0.12); color: var(--accent2); }
-
-  /* PROGRESS BAR INLINE */
-  .pbar-wrap { display: flex; align-items: center; gap: 10px; }
-  .pbar { flex: 1; height: 6px; background: var(--surface2); border-radius: 3px; overflow: hidden; }
-  .pbar-fill { height: 100%; border-radius: 3px; }
-  .pbar-val { width: 48px; text-align: right; font-size: 11px; }
-
-  /* INSIGHT BOXES */
-  .insight-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 20px; }
+  .badge-green { color: #059669; background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.18); }
+  .badge-blue { color: #2563eb; background: rgba(59, 130, 246, 0.1); border-color: rgba(59, 130, 246, 0.18); }
+  .badge-yellow { color: #b45309; background: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.22); }
+  .badge-red { color: #dc2626; background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.18); }
+  .pbar-wrap { display: flex; align-items: center; gap: 12px; }
+  .pbar { flex: 1; height: 10px; background: #e8edf3; border-radius: 999px; overflow: hidden; }
+  .pbar-fill { height: 100%; border-radius: 999px; }
+  .pbar-val { min-width: 54px; text-align: right; color: var(--text-strong); font-family: var(--font-mono); font-size: 11px; }
+  .funnel-wrap { display: grid; gap: 16px; }
+  .funnel-row { display: grid; grid-template-columns: 108px minmax(0, 1fr) 128px; align-items: center; gap: 16px; }
+  .funnel-label {
+    color: var(--muted); font-family: var(--font-mono); font-size: 11px;
+    letter-spacing: 0.08em; text-transform: uppercase; text-align: right;
+  }
+  .funnel-bar-wrap {
+    height: 42px; border-radius: 14px; background: #edf2f7; overflow: hidden;
+    border: 1px solid rgba(217, 226, 236, 0.92);
+  }
+  .funnel-bar {
+    height: 100%; display: flex; align-items: center; padding: 0 14px; border-radius: 14px;
+    font-size: 13px; font-weight: 700; transition: width 0.9s ease;
+  }
+  .funnel-stats { text-align: right; }
+  .funnel-vol { color: var(--text-strong); font-size: 20px; line-height: 1; letter-spacing: -0.03em; font-weight: 800; }
+  .funnel-conv, .drop-badge { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.04em; }
+  .funnel-conv { color: var(--muted); margin-top: 5px; }
+  .drop-badge { color: var(--accent2); margin-top: 4px; }
+  .insight-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: 30px; }
   .insight {
-    background: var(--surface2); border-left: 3px solid var(--accent);
-    padding: 16px 18px; border-radius: 0 6px 6px 0;
+    padding: 22px 22px 20px; border-radius: 18px; border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.95); box-shadow: var(--shadow); position: relative;
   }
-  .insight.warn { border-left-color: var(--accent2); }
-  .insight.note { border-left-color: var(--accent3); }
-  .insight-head { font-family: var(--font-head); font-size: 12px; font-weight: 700; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1px; }
-  .insight-body { font-size: 11px; color: var(--muted); line-height: 1.7; }
-
-  /* RETENTION HEATMAP */
-  .heatmap { display: grid; gap: 4px; }
-  .hm-row { display: flex; gap: 4px; align-items: center; }
-  .hm-label { width: 70px; font-size: 10px; color: var(--muted); text-align: right; }
+  .insight::before {
+    content: ''; position: absolute; inset: 0 auto 0 0; width: 5px;
+    border-radius: 18px 0 0 18px; background: var(--insight-accent);
+  }
+  .insight { --insight-accent: var(--accent3); }
+  .insight.warn { --insight-accent: var(--accent2); }
+  .insight.note { --insight-accent: var(--accent); }
+  .insight-head {
+    color: var(--text-strong); font-size: 13px; font-weight: 800;
+    letter-spacing: 0.02em; text-transform: uppercase; margin-bottom: 8px; padding-left: 10px;
+  }
+  .insight-body { color: var(--muted); font-size: 13px; line-height: 1.8; padding-left: 10px; }
+  .heatmap { display: grid; gap: 8px; }
+  .hm-header { display: flex; gap: 8px; margin-left: 96px; margin-bottom: 8px; }
+  .hm-col-label, .hm-label {
+    color: var(--muted); font-family: var(--font-mono); font-size: 10px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+  }
+  .hm-col-label { width: 64px; text-align: center; }
+  .hm-row { display: flex; gap: 8px; align-items: center; }
+  .hm-label { width: 88px; text-align: right; }
   .hm-cell {
-    width: 52px; height: 32px; border-radius: 4px; display: flex;
-    align-items: center; justify-content: center; font-size: 11px; font-weight: 500;
+    width: 64px; height: 42px; border-radius: 14px; display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono); font-size: 11px; font-weight: 500; border: 1px solid rgba(255, 255, 255, 0.42);
   }
-  .hm-header { display: flex; gap: 4px; margin-left: 74px; }
-  .hm-col-label { width: 52px; text-align: center; font-size: 10px; color: var(--muted); letter-spacing: 1px; }
-
-  /* STAT ROW */
-  .stat-row { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 20px; }
-  .stat-box { background: var(--surface2); border-radius: 6px; padding: 14px 20px; text-align: center; }
-  .stat-box .val { font-family: var(--font-head); font-size: 22px; font-weight: 800; }
-  .stat-box .lbl { font-size: 10px; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; margin-top: 4px; }
-
-  /* SCROLLABLE TABLE */
-  .table-scroll { overflow-x: auto; }
-
-  /* FOOTER */
   footer {
-    margin: 48px 48px 24px;
-    padding-top: 20px; border-top: 1px solid var(--border);
-    display: flex; justify-content: space-between; align-items: center;
-    color: var(--muted); font-size: 11px;
+    margin-top: 40px; padding: 22px 8px 0; border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center; gap: 16px; color: var(--muted); font-size: 12px;
   }
-
-  @media (max-width: 900px) {
-    header { padding: 20px 20px 16px; flex-direction: column; gap: 12px; }
-    nav { padding: 0 20px; }
-    main { padding: 24px 20px; }
-    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
-    .grid-2, .grid-3, .grid-2-1, .grid-1-2 { grid-template-columns: 1fr; }
-    .insight-grid { grid-template-columns: 1fr; }
+  footer span { color: var(--text-strong); font-weight: 600; }
+  @media (max-width: 1100px) {
+    .kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3, .grid-2-1, .grid-1-2, .insight-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 860px) {
+    .page-shell { padding: 18px 16px 28px; }
+    header { padding: 28px 22px 24px; flex-direction: column; align-items: stretch; }
+    nav { padding: 14px 14px 16px; }
+    main { padding-top: 26px; }
+    .grid-2, .funnel-row { grid-template-columns: 1fr; }
+    .funnel-label, .funnel-stats { text-align: left; }
+    .hm-header { margin-left: 0; }
+    .hm-label { width: 72px; }
+    footer { flex-direction: column; align-items: flex-start; }
+  }
+  @media (max-width: 640px) {
+    .kpi-grid { grid-template-columns: 1fr; }
+    .card, .kpi-card { padding: 22px 18px; }
+    th, td { padding-left: 10px; padding-right: 10px; }
+    .brand-sub, .section-desc { font-size: 14px; }
   }
 </style>
 </head>
 <body>
-
-<header>
-  <div class="brand">
-    <div class="brand-tag">Product Analytics Report</div>
-    <div class="brand-title">Jozi<span>cation</span> LMS</div>
-    <div class="brand-sub">Learner Journey Intelligence · 2024–2025</div>
+<div class="page-shell">
+  <div class="topbar">
+    <header>
+      <div class="brand">
+        <div class="brand-tag">Learning Analytics Report</div>
+        <div class="brand-title">Jozi<span>cation</span> LMS</div>
+        <div class="brand-sub">Executive-ready review of learner acquisition, activation, engagement, completion, and drop-off performance across the 2024 to 2025 reporting period.</div>
+      </div>
+      <div class="header-meta">
+        <div><span>Analyst Lens</span><strong>Product and Learning Analytics</strong></div>
+        <div><span>Dataset Scope</span><strong>6,800 enrollments across 4,200 learners</strong></div>
+        <div><span>Reporting Period</span><strong>Jan 2024 - Dec 2025</strong></div>
+        <div><span>Catalog Footprint</span><strong>10 courses across 3 difficulty levels</strong></div>
+      </div>
+    </header>
+    <nav>
+      <button class="nav-btn active" onclick="showSection('exec', this)">Executive Overview</button>
+      <button class="nav-btn" onclick="showSection('funnel', this)">Learner Funnel</button>
+      <button class="nav-btn" onclick="showSection('courses', this)">Course Performance</button>
+      <button class="nav-btn" onclick="showSection('engagement', this)">Engagement and Retention</button>
+      <button class="nav-btn" onclick="showSection('segments', this)">Segmentation</button>
+      <button class="nav-btn" onclick="showSection('dropoff', this)">Drop-off Analysis</button>
+    </nav>
   </div>
-  <div class="header-meta">
-    <div>Analyst Role: <strong>Product Analyst</strong></div>
-    <div>Dataset: <strong>6,800 Enrollments · 4,200 Learners</strong></div>
-    <div>Period: <strong>Jan 2024 – Dec 2025</strong></div>
-    <div>Courses: <strong>10 · 3 Difficulty Levels</strong></div>
-  </div>
-</header>
-
-<nav>
-  <button class="nav-btn active" onclick="showSection('exec')">Executive Overview</button>
-  <button class="nav-btn" onclick="showSection('funnel')">Learner Funnel</button>
-  <button class="nav-btn" onclick="showSection('courses')">Course Performance</button>
-  <button class="nav-btn" onclick="showSection('engagement')">Engagement & Retention</button>
-  <button class="nav-btn" onclick="showSection('segments')">Segmentation</button>
-  <button class="nav-btn" onclick="showSection('dropoff')">Drop-off Analysis</button>
-</nav>
-
-<main>
-
-<!-- ===== EXEC OVERVIEW ===== -->
-<div class="section active" id="exec">
-  <div class="section-title">Executive Overview</div>
-  <div class="section-desc">Top-line product health across the full learner journey. All metrics derived from 6,800 enrollments across 4,200 registered learners.</div>
-
-  <div class="kpi-grid">
-    <div class="kpi-card c1">
-      <div class="kpi-label">Total Enrollments</div>
-      <div class="kpi-value">6,800</div>
-      <div class="kpi-sub">Across 4,200 registered learners</div>
-    </div>
-    <div class="kpi-card c2">
-      <div class="kpi-label">Completion Rate</div>
-      <div class="kpi-value">40.9%</div>
-      <div class="kpi-sub">2,778 learners completed</div>
-    </div>
-    <div class="kpi-card c3">
-      <div class="kpi-label">Avg Satisfaction</div>
-      <div class="kpi-value">3.23</div>
-      <div class="kpi-sub">Out of 5.0 — pulled down by non-starters</div>
-    </div>
-    <div class="kpi-card c4">
-      <div class="kpi-label">Drop-off Rate</div>
-      <div class="kpi-value">59.2%</div>
-      <div class="kpi-sub">4,022 did not complete</div>
-    </div>
-  </div>
-
-  <div class="grid-2">
-    <div class="card">
-      <div class="card-title">Key Rate Summary</div>
-      <div class="card-sub">Funnel conversion at each stage</div>
-      <table>
-        <tr><th>Metric</th><th>Rate</th><th>Volume</th><th>Status</th></tr>
-        <tr><td>Enrollment Rate</td><td>73.6%</td><td>6,800 / 9,240 visitors</td><td><span class="badge badge-green">Strong</span></td></tr>
-        <tr><td>Activation Rate</td><td>54.4%</td><td>3,700 started</td><td><span class="badge badge-yellow">Moderate</span></td></tr>
-        <tr><td>Engagement Rate</td><td>46.4%</td><td>3,153 active</td><td><span class="badge badge-yellow">Moderate</span></td></tr>
-        <tr><td>Completion Rate</td><td>40.9%</td><td>2,778 completed</td><td><span class="badge badge-yellow">Moderate</span></td></tr>
-        <tr><td>Retention (Day 30)</td><td>34.7%</td><td>2,358 returned</td><td><span class="badge badge-red">Needs Work</span></td></tr>
-        <tr><td>Avg Satisfaction</td><td>3.23 / 5</td><td>All enrollments</td><td><span class="badge badge-yellow">Moderate</span></td></tr>
-      </table>
-    </div>
-    <div class="card">
-      <div class="card-title">Monthly Enrollment vs Completion</div>
-      <div class="card-sub">Volume trend Jan 2024 – Dec 2025</div>
-      <div class="chart-wrap"><canvas id="monthlyChart" height="200"></canvas></div>
-    </div>
-  </div>
-
-  <div class="insight-grid">
-    <div class="insight">
-      <div class="insight-head">✅ Enrollment is healthy</div>
-      <div class="insight-body">73.6% of visitors enroll — a strong top-of-funnel signal. The platform has good awareness and intent conversion.</div>
-    </div>
-    <div class="insight warn">
-      <div class="insight-head">⚠ Activation is the biggest gap</div>
-      <div class="insight-body">45.6% of enrollees never start a course. That's 3,100 learners lost before lesson one — the single largest drop in the funnel.</div>
-    </div>
-    <div class="insight note">
-      <div class="insight-head">📌 Completion lags activation</div>
-      <div class="insight-body">Once learners start, 75% complete — completion is less of a problem than getting learners to start in the first place.</div>
-    </div>
-  </div>
-</div>
-
-<!-- ===== FUNNEL ===== -->
-<div class="section" id="funnel">
-  <div class="section-title">Learner Funnel</div>
-  <div class="section-desc">The full acquisition-to-completion pipeline. Each stage shows volume, conversion from previous stage, and drop-off.</div>
-
-  <div class="grid-2-1">
-    <div class="card">
-      <div class="card-title">Funnel Stages</div>
-      <div class="card-sub">Volume and conversion at each gate</div>
-      <div class="funnel-wrap">
-        <div class="funnel-row">
-          <div class="funnel-label">Visitors</div>
-          <div class="funnel-bar-wrap">
-            <div class="funnel-bar" style="width:100%;background:linear-gradient(90deg,#00e5c4,#00b39a);color:#0a0c10;">9,240 visitors</div>
-          </div>
-          <div class="funnel-stats"><div class="funnel-vol" style="color:var(--accent)">9,240</div><div class="funnel-conv">Baseline</div></div>
+  <main>
+    <div class="section active" id="exec">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Executive Overview</div>
+          <div class="section-desc">This summary brings the full learner journey into one view so stakeholders can quickly see where demand is healthy, where conversion slows, and where intervention will return the strongest operational value.</div>
         </div>
-        <div class="funnel-row">
-          <div class="funnel-label">Enrolled</div>
-          <div class="funnel-bar-wrap">
-            <div class="funnel-bar" style="width:73.6%;background:linear-gradient(90deg,#7c85ff,#5c67d6);color:#fff;">6,800 enrolled</div>
-          </div>
-          <div class="funnel-stats"><div class="funnel-vol" style="color:var(--accent4)">6,800</div><div class="funnel-conv">73.6% CVR</div><div class="drop-badge">↓ 2,440 lost</div></div>
+        <div class="section-chip">Portfolio case study - static report</div>
+      </div>
+      <div class="kpi-grid">
+        <div class="kpi-card c1">
+          <div class="kpi-label">Total Enrollments</div>
+          <div class="kpi-value">6,800</div>
+          <div class="kpi-sub">Generated across 4,200 registered learners in the reporting window.</div>
         </div>
-        <div class="funnel-row">
-          <div class="funnel-label">Started</div>
-          <div class="funnel-bar-wrap">
-            <div class="funnel-bar" style="width:54.4%;background:linear-gradient(90deg,#f5c842,#d4a900);color:#0a0c10;">3,700 started</div>
-          </div>
-          <div class="funnel-stats"><div class="funnel-vol" style="color:var(--accent3)">3,700</div><div class="funnel-conv">54.4% CVR</div><div class="drop-badge">↓ 3,100 lost</div></div>
+        <div class="kpi-card c2">
+          <div class="kpi-label">Completion Rate</div>
+          <div class="kpi-value">40.9%</div>
+          <div class="kpi-sub">2,778 enrollments reached completion.</div>
         </div>
-        <div class="funnel-row">
-          <div class="funnel-label">Active</div>
-          <div class="funnel-bar-wrap">
-            <div class="funnel-bar" style="width:46.4%;background:linear-gradient(90deg,#ff9f43,#e07b00);color:#fff;">3,153 active</div>
-          </div>
-          <div class="funnel-stats"><div class="funnel-vol" style="color:#ff9f43">3,153</div><div class="funnel-conv">85.2% of started</div><div class="drop-badge">↓ 547 lost</div></div>
+        <div class="kpi-card c3">
+          <div class="kpi-label">Average Satisfaction</div>
+          <div class="kpi-value">3.23</div>
+          <div class="kpi-sub">Measured out of 5.0 across the full enrolled population.</div>
         </div>
-        <div class="funnel-row">
-          <div class="funnel-label">Completed</div>
-          <div class="funnel-bar-wrap">
-            <div class="funnel-bar" style="width:40.9%;background:linear-gradient(90deg,#ff6b6b,#cc3c3c);color:#fff;">2,778 completed</div>
+        <div class="kpi-card c4">
+          <div class="kpi-label">Drop-off Rate</div>
+          <div class="kpi-value">59.2%</div>
+          <div class="kpi-sub">4,022 enrollments did not complete.</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Key Rate Summary</div>
+          <div class="card-sub">Core funnel conversion rates and current performance status.</div>
+          <table>
+            <tr><th>Metric</th><th>Rate</th><th>Volume</th><th>Status</th></tr>
+            <tr><td>Enrollment Rate</td><td>73.6%</td><td>6,800 / 9,240 visitors</td><td><span class="badge badge-green">Strong</span></td></tr>
+            <tr><td>Activation Rate</td><td>54.4%</td><td>3,700 started</td><td><span class="badge badge-blue">In range</span></td></tr>
+            <tr><td>Engagement Rate</td><td>46.4%</td><td>3,153 active</td><td><span class="badge badge-blue">In range</span></td></tr>
+            <tr><td>Completion Rate</td><td>40.9%</td><td>2,778 completed</td><td><span class="badge badge-yellow">Opportunity</span></td></tr>
+            <tr><td>Retention (Day 30)</td><td>34.7%</td><td>2,358 returned</td><td><span class="badge badge-red">Priority</span></td></tr>
+            <tr><td>Average Satisfaction</td><td>3.23 / 5</td><td>All enrollments</td><td><span class="badge badge-yellow">Opportunity</span></td></tr>
+          </table>
+        </div>
+        <div class="card">
+          <div class="card-title">Monthly Enrollment vs Completion</div>
+          <div class="card-sub">Monthly volume trend from Jan 2024 to Dec 2025.</div>
+          <div class="chart-wrap"><canvas id="monthlyChart" height="200"></canvas></div>
+        </div>
+      </div>
+      <div class="insight-grid">
+        <div class="insight">
+          <div class="insight-head">Demand remains resilient</div>
+          <div class="insight-body">Visitor-to-enrollment conversion stands at 73.6%, which indicates strong initial interest and effective front-end demand capture.</div>
+        </div>
+        <div class="insight warn">
+          <div class="insight-head">Activation is the main commercial constraint</div>
+          <div class="insight-body">45.6% of enrolled learners never reach lesson one. That makes onboarding and time-to-first-session the most valuable area for product improvement.</div>
+        </div>
+        <div class="insight note">
+          <div class="insight-head">Completion improves once momentum starts</div>
+          <div class="insight-body">Three out of four learners who begin a course ultimately complete it, which suggests the strongest payoff will come from better activation rather than additional acquisition alone.</div>
+        </div>
+      </div>
+    </div>
+    <div class="section" id="funnel">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Learner Funnel</div>
+          <div class="section-desc">The funnel shows how volume moves from awareness to completion, with the largest losses highlighted so product, learner success, and growth teams can focus on the highest-value conversion gaps first.</div>
+        </div>
+        <div class="section-chip">Acquisition to completion flow</div>
+      </div>
+      <div class="grid-2-1">
+        <div class="card">
+          <div class="card-title">Funnel Stages</div>
+          <div class="card-sub">Absolute volume, conversion from the prior stage, and associated loss at each point in the journey.</div>
+          <div class="funnel-wrap">
+            <div class="funnel-row">
+              <div class="funnel-label">Visitors</div>
+              <div class="funnel-bar-wrap"><div class="funnel-bar" style="width:100%;background:linear-gradient(90deg,#94a3b8,#64748b);color:#ffffff;">9,240 visitors</div></div>
+              <div class="funnel-stats"><div class="funnel-vol">9,240</div><div class="funnel-conv">Baseline</div></div>
+            </div>
+            <div class="funnel-row">
+              <div class="funnel-label">Enrolled</div>
+              <div class="funnel-bar-wrap"><div class="funnel-bar" style="width:73.6%;background:linear-gradient(90deg,#60a5fa,#3b82f6);color:#ffffff;">6,800 enrolled</div></div>
+              <div class="funnel-stats"><div class="funnel-vol">6,800</div><div class="funnel-conv">73.6% conversion</div><div class="drop-badge">Down 2,440 from visitors</div></div>
+            </div>
+            <div class="funnel-row">
+              <div class="funnel-label">Started</div>
+              <div class="funnel-bar-wrap"><div class="funnel-bar" style="width:54.4%;background:linear-gradient(90deg,#38bdf8,#0ea5e9);color:#ffffff;">3,700 started</div></div>
+              <div class="funnel-stats"><div class="funnel-vol">3,700</div><div class="funnel-conv">54.4% conversion</div><div class="drop-badge">Down 3,100 after enrollment</div></div>
+            </div>
+            <div class="funnel-row">
+              <div class="funnel-label">Active</div>
+              <div class="funnel-bar-wrap"><div class="funnel-bar" style="width:46.4%;background:linear-gradient(90deg,#34d399,#10b981);color:#ffffff;">3,153 active</div></div>
+              <div class="funnel-stats"><div class="funnel-vol">3,153</div><div class="funnel-conv">85.2% of starters</div><div class="drop-badge">Down 547 after start</div></div>
+            </div>
+            <div class="funnel-row">
+              <div class="funnel-label">Completed</div>
+              <div class="funnel-bar-wrap"><div class="funnel-bar" style="width:40.9%;background:linear-gradient(90deg,#22c55e,#16a34a);color:#ffffff;">2,778 completed</div></div>
+              <div class="funnel-stats"><div class="funnel-vol">2,778</div><div class="funnel-conv">88.1% of active</div><div class="drop-badge">Down 375 after active learning</div></div>
+            </div>
           </div>
-          <div class="funnel-stats"><div class="funnel-vol" style="color:var(--accent2)">2,778</div><div class="funnel-conv">88.1% of active</div><div class="drop-badge">↓ 375 lost</div></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Conversion Rates</div>
+          <div class="card-sub">Stage-by-stage conversion relative to the previous step.</div>
+          <div class="chart-wrap"><canvas id="funnelChart" height="280"></canvas></div>
+        </div>
+      </div>
+      <div class="insight-grid">
+        <div class="insight warn">
+          <div class="insight-head">Enrollment to start is the weakest gate</div>
+          <div class="insight-body">3,100 learners enroll but do not begin. The evidence points to activation friction rather than a lack of interest or poor course-market fit.</div>
+        </div>
+        <div class="insight">
+          <div class="insight-head">The learning experience holds once started</div>
+          <div class="insight-body">Among learners who start, 75% complete. This indicates that course value is being realized after the initial barrier is cleared.</div>
+        </div>
+        <div class="insight note">
+          <div class="insight-head">Activation is the fastest path to growth</div>
+          <div class="insight-body">A 10% uplift in activation would create roughly 680 additional starters and about 510 more completions without increasing top-of-funnel traffic.</div>
         </div>
       </div>
     </div>
 
-    <div class="card">
-      <div class="card-title">Conversion Rates</div>
-      <div class="card-sub">Each stage vs previous</div>
-      <div class="chart-wrap"><canvas id="funnelChart" height="280"></canvas></div>
+    <div class="section" id="courses">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Course Performance</div>
+          <div class="section-desc">Course-level performance shows where the catalog is serving learners effectively and where difficulty, readiness, or support design may be limiting throughput and satisfaction.</div>
+        </div>
+        <div class="section-chip">10-course portfolio view</div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Completion Rate by Course</div>
+          <div class="card-sub">Higher values indicate stronger learner progression through each course.</div>
+          <div class="chart-wrap"><canvas id="courseCompChart" height="240"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Satisfaction Score by Course</div>
+          <div class="card-sub">Average learner satisfaction measured out of 5.</div>
+          <div class="chart-wrap"><canvas id="courseSatChart" height="240"></canvas></div>
+        </div>
+      </div>
+      <div class="card" style="margin-bottom:22px;">
+        <div class="card-title">Full Course Breakdown</div>
+        <div class="card-sub">The full catalog ranked by completion performance, with engagement and satisfaction included for context.</div>
+        <div class="table-scroll">
+          <table>
+            <tr><th>Course</th><th>Category</th><th>Difficulty</th><th>Enrollments</th><th>Completion %</th><th>Engagement %</th><th>Satisfaction</th></tr>
+            <tr><td>Excel for Operations</td><td>Productivity</td><td><span class="badge badge-green">Beginner</span></td><td>620</td><td><div class="pbar-wrap"><div class="pbar"><div class="pbar-fill" style="width:60.16%;background:var(--accent3);"></div></div><div class="pbar-val">60.2%</div></div></td><td>63.2%</td><td>3.83</td></tr>
+            <tr><td>Dashboard Design for Execs</td><td>Business Intel.</td><td><span class="badge badge-green">Beginner</span></td><td>655</td><td><div class="pbar-wrap"><div class="pbar"><div class="pbar-fill" style="width:59.85%;background:var(--accent3);"></div></div><div class="pbar-val">59.9%</div></div></td><td>63.2%</td><td>3.83</td></tr>
+            <tr><td>Data Literacy for Teams</td><td>Analytics Found.</td><td><span class="badge badge-green">Beginner</span></td><td>566</td><td><div class="pbar-wrap"><div class="pbar"><div class="pbar-fill" style="width:59.72%;background:var(--accent3);"></div></div><div class="pbar-val">59.7%</div></div></td><td>62.2%</td><td>3.81</td></tr>
+            <tr><td>Product Analytics Fund.</td><td>Product Analytics</td><td><span class="badge badge-blue">Intermediate</span></td><td>715</td><td><div class="pbar-wrap"><div class="pbar"><div class="pbar-fill" style="width:43.92%;background:var(--accent);"></div></div><div class="pbar-val">43.9%</div></div></td><td>48.1%</td><td>3.31</td></tr>
+            <tr><td>Customer Research EdTech</td><td>Product Strategy</td><td><span class="badge badge-blue">Intermediate</span></td><td>566</td><td><div class="pbar-wrap"><div class="pbar"><div class="pbar-fill" style="width:41.87%;background:var(--accent);"></div></div><div class="pbar-val">41.9%</div></div></td><td>46.1%</td><td>3.24</td></tr>
+            <tr><td>Power BI Storytelling</td><td>Business Intel.</td><td><span class="badge badge-blue">Intermediate</span></td><td>691</td><td><div class="pbar-wrap"><div class="pbar"><div class="pbar-fill" style="width:41.82%;background:var(--accent);"></div></div><div class="pbar-val">41.8%</div></div></td><td>48.3%</td><td>3.31</td></tr>
+            <tr><td>SQL for Product Metrics</td><td>Data Analysis</td><td><span class="badge badge-blue">Intermediate</span></td><td>737</td><td><div class="pbar-wrap"><div class="pbar"><div class="pbar-fill" style="width:39.48%;background:var(--accent);"></div></div><div class="pbar-val">39.5%</div></div></td><td>45.5%</td><td>3.22</td></tr>
+            <tr><td>Cohort Analysis in Practice</td><td>Product Analytics</td><td><span class="badge badge-red">Advanced</span></td><td>753</td><td><div class="pbar-wrap"><div class="pbar"><div class="pbar-fill" style="width:25.9%;background:var(--accent2);"></div></div><div class="pbar-val">25.9%</div></div></td><td>32.7%</td><td>2.74</td></tr>
+            <tr><td>Experimentation &amp; A/B Testing</td><td>Product Analytics</td><td><span class="badge badge-red">Advanced</span></td><td>687</td><td><div class="pbar-wrap"><div class="pbar"><div class="pbar-fill" style="width:23.44%;background:var(--accent2);"></div></div><div class="pbar-val">23.4%</div></div></td><td>32.0%</td><td>2.69</td></tr>
+            <tr><td>Python for Reporting Auto.</td><td>Data Analysis</td><td><span class="badge badge-red">Advanced</span></td><td>810</td><td><div class="pbar-wrap"><div class="pbar"><div class="pbar-fill" style="width:23.21%;background:var(--accent2);"></div></div><div class="pbar-val">23.2%</div></div></td><td>31.5%</td><td>2.65</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="insight-grid">
+        <div class="insight">
+          <div class="insight-head">Beginner content is the strongest portfolio asset</div>
+          <div class="insight-body">All three beginner courses deliver approximately 60% completion and satisfaction near 3.8, positioning them as reliable entry points for new learners.</div>
+        </div>
+        <div class="insight warn">
+          <div class="insight-head">Advanced pathways are underperforming</div>
+          <div class="insight-body">Python, A/B Testing, and Cohort Analysis sit below 26% completion despite meaningful demand, which points to a readiness or scaffolding gap rather than a discovery problem.</div>
+        </div>
+        <div class="insight note">
+          <div class="insight-head">Prerequisite design would likely improve throughput</div>
+          <div class="insight-body">Structured pathways, readiness checks, or recommended pre-work could improve persistence in the advanced catalog without diluting enrollment demand.</div>
+        </div>
+      </div>
     </div>
-  </div>
+    <div class="section" id="engagement">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Engagement and Retention</div>
+          <div class="section-desc">Engagement depth and return behavior provide the clearest signal on whether learners are building enough momentum to reach completion and remain active over time.</div>
+        </div>
+        <div class="section-chip">Behavior and momentum signals</div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Completion Rate by Session Band</div>
+          <div class="card-sub">Completion accelerates sharply once learners move beyond the first few sessions.</div>
+          <div class="chart-wrap"><canvas id="sessionsChart" height="220"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Retention Decay: Day 1 to Day 30</div>
+          <div class="card-sub">Share of enrolled learners returning at each checkpoint.</div>
+          <div class="chart-wrap"><canvas id="retentionChart" height="220"></canvas></div>
+        </div>
+      </div>
+      <div class="card" style="margin-bottom:22px;">
+        <div class="card-title">Cohort Retention Heatmap</div>
+        <div class="card-sub">Retention by enrollment month cohort. Darker cells indicate stronger return behavior.</div>
+        <div id="heatmapWrap" style="overflow-x:auto; margin-top:10px;"></div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Session Band Detail</div>
+          <div class="card-sub">Engagement depth, time spent, and progress indicators by session group.</div>
+          <table>
+            <tr><th>Sessions</th><th>Enrollments</th><th>Avg Hours</th><th>Avg Progress</th><th>Completion</th></tr>
+            <tr><td>1-2 sessions</td><td>3,638</td><td>0.35 hrs</td><td>3.7%</td><td><span class="badge badge-red">0.0%</span></td></tr>
+            <tr><td>3-5 sessions</td><td>353</td><td>4.54 hrs</td><td>49.7%</td><td><span class="badge badge-red">0.0%</span></td></tr>
+            <tr><td>6-8 sessions</td><td>879</td><td>13.8 hrs</td><td>93.7%</td><td><span class="badge badge-green">96.7%</span></td></tr>
+            <tr><td>9+ sessions</td><td>1,930</td><td>13.7 hrs</td><td>94.6%</td><td><span class="badge badge-green">99.9%</span></td></tr>
+          </table>
+        </div>
+        <div class="card">
+          <div class="card-title">Retention Rates Summary</div>
+          <div class="card-sub">Returning learners at each selected interval.</div>
+          <table>
+            <tr><th>Day</th><th>Returning</th><th>Eligible</th><th>Retention Rate</th></tr>
+            <tr><td>Day 1</td><td>3,284</td><td>6,800</td><td><div class="pbar-wrap"><div class="pbar"><div class="pbar-fill" style="width:48.3%;background:var(--accent3);"></div></div><div class="pbar-val">48.3%</div></div></td></tr>
+            <tr><td>Day 7</td><td>3,109</td><td>6,800</td><td><div class="pbar-wrap"><div class="pbar"><div class="pbar-fill" style="width:45.7%;background:var(--accent);"></div></div><div class="pbar-val">45.7%</div></div></td></tr>
+            <tr><td>Day 14</td><td>2,849</td><td>6,800</td><td><div class="pbar-wrap"><div class="pbar"><div class="pbar-fill" style="width:41.9%;background:var(--accent4);"></div></div><div class="pbar-val">41.9%</div></div></td></tr>
+            <tr><td>Day 30</td><td>2,358</td><td>6,800</td><td><div class="pbar-wrap"><div class="pbar"><div class="pbar-fill" style="width:34.7%;background:var(--accent2);"></div></div><div class="pbar-val">34.7%</div></div></td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="insight-grid">
+        <div class="insight warn">
+          <div class="insight-head">Early-session attrition is steep</div>
+          <div class="insight-body">3,638 learners remain in the 1 to 2 session band with zero completion, making early re-engagement the highest-leverage intervention available.</div>
+        </div>
+        <div class="insight">
+          <div class="insight-head">Six sessions is the turning point</div>
+          <div class="insight-body">Once learners reach six or more sessions, completion rises to 96% to 100%. The product experience strengthens materially after the early usage hurdle is cleared.</div>
+        </div>
+        <div class="insight note">
+          <div class="insight-head">Day 30 retention needs structured reinforcement</div>
+          <div class="insight-body">Retention falls 13.6 points from Day 1 to Day 30, suggesting room for stronger nudges, milestone reinforcement, and lightweight accountability mechanisms.</div>
+        </div>
+      </div>
+    </div>
 
-  <div class="insight-grid">
-    <div class="insight warn">
-      <div class="insight-head">🔴 Enroll → Start: Worst Gate</div>
-      <div class="insight-body">3,100 learners (45.6%) enrolled but never pressed play. This is the product's most critical failure point — likely onboarding friction or poor first-session design.</div>
+    <div class="section" id="segments">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Learner Segmentation</div>
+          <div class="section-desc">Segment analysis highlights where outcomes differ across device, geography, and age so support actions can be targeted where the improvement opportunity is largest.</div>
+        </div>
+        <div class="section-chip">Audience performance view</div>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-title">Completion by Device</div>
+          <div class="card-sub">Desktop learners currently outperform mobile and tablet cohorts.</div>
+          <div class="chart-wrap"><canvas id="deviceChart" height="200"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Completion by Region</div>
+          <div class="card-sub">Provincial ranking across the South African learner base.</div>
+          <div class="chart-wrap"><canvas id="regionChart" height="200"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Completion by Age Group</div>
+          <div class="card-sub">35 to 44 leads while 25 to 34 trails the peer groups.</div>
+          <div class="chart-wrap"><canvas id="ageChart" height="200"></canvas></div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Device Breakdown</div>
+          <div class="card-sub">Completion, engagement, and satisfaction by device type.</div>
+          <table>
+            <tr><th>Device</th><th>Enrollments</th><th>Share</th><th>Completion</th><th>Engagement</th><th>Satisfaction</th></tr>
+            <tr><td>Desktop</td><td>2,396</td><td>35.2%</td><td><span style="color:#059669; font-weight:700;">47.8%</span></td><td>52.6%</td><td>3.44</td></tr>
+            <tr><td>Mobile</td><td>3,808</td><td>56.0%</td><td><span style="color:var(--accent2); font-weight:700;">36.2%</span></td><td>42.3%</td><td>3.08</td></tr>
+            <tr><td>Tablet</td><td>596</td><td>8.8%</td><td><span style="color:var(--accent); font-weight:700;">42.6%</span></td><td>47.2%</td><td>3.29</td></tr>
+          </table>
+        </div>
+        <div class="card">
+          <div class="card-title">Regional Completion Ranking</div>
+          <div class="card-sub">Relative performance across all nine provinces.</div>
+          <table>
+            <tr><th>Province</th><th>Enrollments</th><th>Completion</th><th>Engagement</th></tr>
+            <tr><td>Eastern Cape</td><td>598</td><td><span style="color:#059669; font-weight:700;">44.0%</span></td><td>49.5%</td></tr>
+            <tr><td>Limpopo</td><td>530</td><td>42.5%</td><td>47.2%</td></tr>
+            <tr><td>Western Cape</td><td>1,155</td><td>42.3%</td><td>48.7%</td></tr>
+            <tr><td>Free State</td><td>288</td><td>41.0%</td><td>45.5%</td></tr>
+            <tr><td>Mpumalanga</td><td>440</td><td>40.7%</td><td>45.2%</td></tr>
+            <tr><td>Gauteng</td><td>2,360</td><td>40.6%</td><td>46.4%</td></tr>
+            <tr><td>Northern Cape</td><td>62</td><td>38.7%</td><td>45.2%</td></tr>
+            <tr><td>North West</td><td>202</td><td>38.6%</td><td>44.6%</td></tr>
+            <tr><td>KwaZulu-Natal</td><td>1,165</td><td><span style="color:var(--accent2); font-weight:700;">38.2%</span></td><td>43.1%</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="insight-grid">
+        <div class="insight warn">
+          <div class="insight-head">Mobile is the biggest segment and the biggest experience gap</div>
+          <div class="insight-body">Mobile accounts for 56% of enrollments but trails desktop by 11.5 percentage points on completion, making it the most commercially important experience gap in the portfolio.</div>
+        </div>
+        <div class="insight">
+          <div class="insight-head">The 35 to 44 cohort leads on outcomes</div>
+          <div class="insight-body">This group records the highest completion rate at 42.1%, suggesting stronger intent, focus, or fit with the current course design.</div>
+        </div>
+        <div class="insight note">
+          <div class="insight-head">Gauteng offers the largest absolute upside</div>
+          <div class="insight-body">With 2,360 enrollments, even modest completion gains in Gauteng would generate more finished learners than improvement in most smaller provinces.</div>
+        </div>
+      </div>
     </div>
-    <div class="insight">
-      <div class="insight-head">🟢 Start → Complete: Solid</div>
-      <div class="insight-body">Of the 3,700 who started, 75% eventually completed. Once learners engage, momentum carries them through — the content is not the problem.</div>
+
+    <div class="section" id="dropoff">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Drop-off Analysis</div>
+          <div class="section-desc">This view isolates where learners exit, which segments are most exposed, and where targeted interventions could recover meaningful volume without additional acquisition spend.</div>
+        </div>
+        <div class="section-chip">Attrition concentration analysis</div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Drop-off by Journey Stage</div>
+          <div class="card-sub">Distribution of attrition across the learner journey.</div>
+          <div class="chart-wrap"><canvas id="dropoffChart" height="240"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Drop-off Rate by Course</div>
+          <div class="card-sub">Share of enrolled learners who do not complete each course.</div>
+          <div class="chart-wrap"><canvas id="dropCourseChart" height="240"></canvas></div>
+        </div>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-title">Drop-off by Device</div>
+          <div class="card-sub">Mobile remains the highest-risk device segment.</div>
+          <table>
+            <tr><th>Device</th><th>Drop-off Rate</th></tr>
+            <tr><td>Mobile</td><td><div class="pbar-wrap"><div class="pbar"><div class="pbar-fill" style="width:63.76%;background:var(--accent2);"></div></div><div class="pbar-val">63.8%</div></div></td></tr>
+            <tr><td>Tablet</td><td><div class="pbar-wrap"><div class="pbar"><div class="pbar-fill" style="width:57.38%;background:var(--warning);"></div></div><div class="pbar-val">57.4%</div></div></td></tr>
+            <tr><td>Desktop</td><td><div class="pbar-wrap"><div class="pbar"><div class="pbar-fill" style="width:52.25%;background:var(--accent);"></div></div><div class="pbar-val">52.3%</div></div></td></tr>
+          </table>
+        </div>
+        <div class="card">
+          <div class="card-title">Drop-off by Age Group</div>
+          <div class="card-sub">Attrition remains relatively consistent across age cohorts.</div>
+          <table>
+            <tr><th>Age Group</th><th>Drop-off Rate</th></tr>
+            <tr><td>25-34</td><td><div class="pbar-wrap"><div class="pbar"><div class="pbar-fill" style="width:59.98%;background:var(--accent2);"></div></div><div class="pbar-val">60.0%</div></div></td></tr>
+            <tr><td>45+</td><td><div class="pbar-wrap"><div class="pbar"><div class="pbar-fill" style="width:59.38%;background:var(--warning);"></div></div><div class="pbar-val">59.4%</div></div></td></tr>
+            <tr><td>18-24</td><td><div class="pbar-wrap"><div class="pbar"><div class="pbar-fill" style="width:58.62%;background:var(--warning);"></div></div><div class="pbar-val">58.6%</div></div></td></tr>
+            <tr><td>35-44</td><td><div class="pbar-wrap"><div class="pbar"><div class="pbar-fill" style="width:57.89%;background:var(--accent);"></div></div><div class="pbar-val">57.9%</div></div></td></tr>
+          </table>
+        </div>
+        <div class="card">
+          <div class="card-title">Journey Stage Breakdown</div>
+          <div class="card-sub">Share of all 6,800 enrollments by final state.</div>
+          <table>
+            <tr><th>Stage</th><th>Count</th><th>Share</th></tr>
+            <tr><td>Enrolled not started</td><td>3,100</td><td><span style="color:var(--accent2); font-weight:700;">45.6%</span></td></tr>
+            <tr><td>Completed</td><td>2,778</td><td><span style="color:#059669; font-weight:700;">40.9%</span></td></tr>
+            <tr><td>Dropped mid-course</td><td>529</td><td>7.8%</td></tr>
+            <tr><td>Dropped after first lesson</td><td>207</td><td>3.0%</td></tr>
+            <tr><td>Active no completion</td><td>111</td><td>1.6%</td></tr>
+            <tr><td>Dropped after enrollment</td><td>75</td><td>1.1%</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="insight-grid">
+        <div class="insight warn">
+          <div class="insight-head">Non-starters dominate total attrition</div>
+          <div class="insight-body">The single largest drop-off bucket is the enrolled learner who never begins. Improving first-session entry would recover more value than any later-stage intervention.</div>
+        </div>
+        <div class="insight warn">
+          <div class="insight-head">Advanced courses carry concentrated risk</div>
+          <div class="insight-body">Python, A/B Testing, and Cohort Analysis post dropout rates between 74% and 77%, reinforcing the need for clearer readiness design and progression support.</div>
+        </div>
+        <div class="insight note">
+          <div class="insight-head">Mid-course attrition is comparatively manageable</div>
+          <div class="insight-body">Only 7.8% of enrollments are lost mid-course, which suggests reminders, milestone reinforcement, and timely check-ins could deliver measurable gains.</div>
+        </div>
+      </div>
     </div>
-    <div class="insight note">
-      <div class="insight-head">📌 Fix Activation First</div>
-      <div class="insight-body">A 10% improvement in activation (enroll→start) would add ~680 new starters and approximately 510 more completions, without acquiring a single new visitor.</div>
-    </div>
-  </div>
+  </main>
+
+  <footer>
+    <div><span>Jozication LMS Analytics</span> - Product analytics report for the 2024 to 2025 learner journey.</div>
+    <div>Built with Chart.js - Data pipeline: SQLite and Python - 6,800 enrollment records</div>
+  </footer>
 </div>
-
-<!-- ===== COURSES ===== -->
-<div class="section" id="courses">
-  <div class="section-title">Course Performance</div>
-  <div class="section-desc">Completion rates, engagement, and satisfaction across all 10 courses. Grouped by difficulty level to surface structural patterns.</div>
-
-  <div class="grid-2">
-    <div class="card">
-      <div class="card-title">Completion Rate by Course</div>
-      <div class="card-sub">Higher bars = stronger learner throughput</div>
-      <div class="chart-wrap"><canvas id="courseCompChart" height="240"></canvas></div>
-    </div>
-    <div class="card">
-      <div class="card-title">Satisfaction Score by Course</div>
-      <div class="card-sub">Average learner satisfaction (out of 5)</div>
-      <div class="chart-wrap"><canvas id="courseSatChart" height="240"></canvas></div>
-    </div>
-  </div>
-
-  <div class="card" style="margin-bottom:20px">
-    <div class="card-title">Full Course Breakdown</div>
-    <div class="card-sub">All 10 courses ranked by completion rate</div>
-    <div class="table-scroll">
-    <table>
-      <tr><th>Course</th><th>Category</th><th>Difficulty</th><th>Enrollments</th><th>Completion %</th><th>Engagement %</th><th>Satisfaction</th></tr>
-      <tr><td>Excel for Operations</td><td>Productivity</td><td><span class="badge badge-green">Beginner</span></td><td>620</td><td><div class="pbar-wrap"><div class="pbar"><div class="pbar-fill" style="width:60.16%;background:var(--accent)"></div></div><div class="pbar-val">60.2%</div></div></td><td>63.2%</td><td>3.83</td></tr>
-      <tr><td>Dashboard Design for Execs</td><td>Business Intel.</td><td><span class="badge badge-green">Beginner</span></td><td>655</td><td><div class="pbar-wrap"><div class="pbar"><div class="pbar-fill" style="width:59.85%;background:var(--accent)"></div></div><div class="pbar-val">59.9%</div></div></td><td>63.2%</td><td>3.83</td></tr>
-      <tr><td>Data Literacy for Teams</td><td>Analytics Found.</td><td><span class="badge badge-green">Beginner</span></td><td>566</td><td><div class="pbar-wrap"><div class="pbar"><div class="pbar-fill" style="width:59.72%;background:var(--accent)"></div></div><div class="pbar-val">59.7%</div></div></td><td>62.2%</td><td>3.81</td></tr>
-      <tr><td>Product Analytics Fund.</td><td>Product Analytics</td><td><span class="badge badge-yellow">Intermediate</span></td><td>715</td><td><div class="pbar-wrap"><div class="pbar"><div class="pbar-fill" style="width:43.92%;background:var(--accent3)"></div></div><div class="pbar-val">43.9%</div></div></td><td>48.1%</td><td>3.31</td></tr>
-      <tr><td>Customer Research EdTech</td><td>Product Strategy</td><td><span class="badge badge-yellow">Intermediate</span></td><td>566</td><td><div class="pbar-wrap"><div class="pbar"><div class="pbar-fill" style="width:41.87%;background:var(--accent3)"></div></div><div class="pbar-val">41.9%</div></div></td><td>46.1%</td><td>3.24</td></tr>
-      <tr><td>Power BI Storytelling</td><td>Business Intel.</td><td><span class="badge badge-yellow">Intermediate</span></td><td>691</td><td><div class="pbar-wrap"><div class="pbar"><div class="pbar-fill" style="width:41.82%;background:var(--accent3)"></div></div><div class="pbar-val">41.8%</div></div></td><td>48.3%</td><td>3.31</td></tr>
-      <tr><td>SQL for Product Metrics</td><td>Data Analysis</td><td><span class="badge badge-yellow">Intermediate</span></td><td>737</td><td><div class="pbar-wrap"><div class="pbar"><div class="pbar-fill" style="width:39.48%;background:var(--accent3)"></div></div><div class="pbar-val">39.5%</div></div></td><td>45.5%</td><td>3.22</td></tr>
-      <tr><td>Cohort Analysis in Practice</td><td>Product Analytics</td><td><span class="badge badge-red">Advanced</span></td><td>753</td><td><div class="pbar-wrap"><div class="pbar"><div class="pbar-fill" style="width:25.9%;background:var(--accent2)"></div></div><div class="pbar-val">25.9%</div></div></td><td>32.7%</td><td>2.74</td></tr>
-      <tr><td>Experimentation & A/B Testing</td><td>Product Analytics</td><td><span class="badge badge-red">Advanced</span></td><td>687</td><td><div class="pbar-wrap"><div class="pbar"><div class="pbar-fill" style="width:23.44%;background:var(--accent2)"></div></div><div class="pbar-val">23.4%</div></div></td><td>32.0%</td><td>2.69</td></tr>
-      <tr><td>Python for Reporting Auto.</td><td>Data Analysis</td><td><span class="badge badge-red">Advanced</span></td><td>810</td><td><div class="pbar-wrap"><div class="pbar"><div class="pbar-fill" style="width:23.21%;background:var(--accent2)"></div></div><div class="pbar-val">23.2%</div></div></td><td>31.5%</td><td>2.65</td></tr>
-    </table>
-    </div>
-  </div>
-
-  <div class="insight-grid">
-    <div class="insight">
-      <div class="insight-head">🟢 Beginner courses perform</div>
-      <div class="insight-body">All 3 beginner courses hit ~60% completion with ~3.82 avg satisfaction. These are the product's anchors — keep them polished and use them as entry points.</div>
-    </div>
-    <div class="insight warn">
-      <div class="insight-head">🔴 Advanced courses struggling</div>
-      <div class="insight-body">Python, A/B Testing, and Cohort Analysis all sit below 26% completion. High enrolment (2,250 combined) but poor throughput — a readiness mismatch problem.</div>
-    </div>
-    <div class="insight note">
-      <div class="insight-head">📌 Prerequisite paths needed</div>
-      <div class="insight-body">Advanced course learners may be under-prepared. Consider gating advanced enrolments with beginner completions, or adding structured learning paths.</div>
-    </div>
-  </div>
-</div>
-
-<!-- ===== ENGAGEMENT & RETENTION ===== -->
-<div class="section" id="engagement">
-  <div class="section-title">Engagement & Retention</div>
-  <div class="section-desc">How deeply learners engage with content and whether they return over time. Sessions, progress patterns, and retention decay.</div>
-
-  <div class="grid-2">
-    <div class="card">
-      <div class="card-title">Completion Rate by Session Band</div>
-      <div class="card-sub">More sessions = dramatically better outcomes</div>
-      <div class="chart-wrap"><canvas id="sessionsChart" height="220"></canvas></div>
-    </div>
-    <div class="card">
-      <div class="card-title">Retention Decay: Day 1 → Day 30</div>
-      <div class="card-sub">% of enrolled learners returning at each checkpoint</div>
-      <div class="chart-wrap"><canvas id="retentionChart" height="220"></canvas></div>
-    </div>
-  </div>
-
-  <div class="card" style="margin-bottom:20px">
-    <div class="card-title">Cohort Retention Heatmap</div>
-    <div class="card-sub">Retention rate by enrollment month cohort · darker green = stronger retention</div>
-    <div id="heatmapWrap" style="overflow-x:auto;margin-top:8px;"></div>
-  </div>
-
-  <div class="grid-2">
-    <div class="card">
-      <div class="card-title">Session Band Detail</div>
-      <div class="card-sub">Engagement depth metrics</div>
-      <table>
-        <tr><th>Sessions</th><th>Enrollments</th><th>Avg Hours</th><th>Avg Progress</th><th>Completion</th></tr>
-        <tr><td>1–2 sessions</td><td>3,638</td><td>0.35 hrs</td><td>3.7%</td><td><span class="badge badge-red">0.0%</span></td></tr>
-        <tr><td>3–5 sessions</td><td>353</td><td>4.54 hrs</td><td>49.7%</td><td><span class="badge badge-red">0.0%</span></td></tr>
-        <tr><td>6–8 sessions</td><td>879</td><td>13.8 hrs</td><td>93.7%</td><td><span class="badge badge-green">96.7%</span></td></tr>
-        <tr><td>9+ sessions</td><td>1,930</td><td>13.7 hrs</td><td>94.6%</td><td><span class="badge badge-green">99.9%</span></td></tr>
-      </table>
-    </div>
-    <div class="card">
-      <div class="card-title">Retention Rates Summary</div>
-      <div class="card-sub">Returning learners at each interval</div>
-      <table>
-        <tr><th>Day</th><th>Returning</th><th>Eligible</th><th>Retention Rate</th></tr>
-        <tr><td>Day 1</td><td>3,284</td><td>6,800</td><td><div class="pbar-wrap"><div class="pbar"><div class="pbar-fill" style="width:48.3%;background:var(--accent)"></div></div><div class="pbar-val">48.3%</div></div></td></tr>
-        <tr><td>Day 7</td><td>3,109</td><td>6,800</td><td><div class="pbar-wrap"><div class="pbar"><div class="pbar-fill" style="width:45.7%;background:var(--accent4)"></div></div><div class="pbar-val">45.7%</div></div></td></tr>
-        <tr><td>Day 14</td><td>2,849</td><td>6,800</td><td><div class="pbar-wrap"><div class="pbar"><div class="pbar-fill" style="width:41.9%;background:var(--accent3)"></div></div><div class="pbar-val">41.9%</div></div></td></tr>
-        <tr><td>Day 30</td><td>2,358</td><td>6,800</td><td><div class="pbar-wrap"><div class="pbar"><div class="pbar-fill" style="width:34.7%;background:var(--accent2)"></div></div><div class="pbar-val">34.7%</div></div></td></tr>
-      </table>
-    </div>
-  </div>
-
-  <div class="insight-grid">
-    <div class="insight warn">
-      <div class="insight-head">⚠ Session cliff at 1–2</div>
-      <div class="insight-body">3,638 learners (53%) are stuck at 1–2 sessions with 0% completion. Getting them to session 6 is the single highest-leverage engagement lever.</div>
-    </div>
-    <div class="insight">
-      <div class="insight-head">✅ 6+ sessions = near-certain completion</div>
-      <div class="insight-body">Learners who hit 6+ sessions complete at 96–99%. The product works — the challenge is getting learners to that threshold.</div>
-    </div>
-    <div class="insight note">
-      <div class="insight-head">📌 Day 30 retention at 34.7%</div>
-      <div class="insight-body">A 13.6 point drop from Day 1 to Day 30. Typical for async course products, but signals need for nudge sequences, streak mechanics, or cohort accountability features.</div>
-    </div>
-  </div>
-</div>
-
-<!-- ===== SEGMENTATION ===== -->
-<div class="section" id="segments">
-  <div class="section-title">Learner Segmentation</div>
-  <div class="section-desc">How performance varies across device type, region, and age group. Identifying which learner segments to prioritise and which to support.</div>
-
-  <div class="grid-3">
-    <div class="card">
-      <div class="card-title">Completion by Device</div>
-      <div class="card-sub">Desktop learners outperform mobile</div>
-      <div class="chart-wrap"><canvas id="deviceChart" height="200"></canvas></div>
-    </div>
-    <div class="card">
-      <div class="card-title">Completion by Region</div>
-      <div class="card-sub">Provincial performance ranking</div>
-      <div class="chart-wrap"><canvas id="regionChart" height="200"></canvas></div>
-    </div>
-    <div class="card">
-      <div class="card-title">Completion by Age Group</div>
-      <div class="card-sub">35–44 leads, 25–34 trails</div>
-      <div class="chart-wrap"><canvas id="ageChart" height="200"></canvas></div>
-    </div>
-  </div>
-
-  <div class="grid-2">
-    <div class="card">
-      <div class="card-title">Device Breakdown</div>
-      <div class="card-sub">Completion, engagement & satisfaction by device</div>
-      <table>
-        <tr><th>Device</th><th>Enrollments</th><th>Share</th><th>Completion</th><th>Engagement</th><th>Satisfaction</th></tr>
-        <tr><td>🖥 Desktop</td><td>2,396</td><td>35.2%</td><td><span style="color:var(--accent)">47.8%</span></td><td>52.6%</td><td>3.44</td></tr>
-        <tr><td>📱 Mobile</td><td>3,808</td><td>56.0%</td><td><span style="color:var(--accent2)">36.2%</span></td><td>42.3%</td><td>3.08</td></tr>
-        <tr><td>📟 Tablet</td><td>596</td><td>8.8%</td><td><span style="color:var(--accent3)">42.6%</span></td><td>47.2%</td><td>3.29</td></tr>
-      </table>
-    </div>
-    <div class="card">
-      <div class="card-title">Regional Completion Ranking</div>
-      <div class="card-sub">All 9 provinces</div>
-      <table>
-        <tr><th>Province</th><th>Enrollments</th><th>Completion</th><th>Engagement</th></tr>
-        <tr><td>Eastern Cape</td><td>598</td><td><span style="color:var(--accent)">44.0%</span></td><td>49.5%</td></tr>
-        <tr><td>Limpopo</td><td>530</td><td>42.5%</td><td>47.2%</td></tr>
-        <tr><td>Western Cape</td><td>1,155</td><td>42.3%</td><td>48.7%</td></tr>
-        <tr><td>Free State</td><td>288</td><td>41.0%</td><td>45.5%</td></tr>
-        <tr><td>Mpumalanga</td><td>440</td><td>40.7%</td><td>45.2%</td></tr>
-        <tr><td>Gauteng</td><td>2,360</td><td>40.6%</td><td>46.4%</td></tr>
-        <tr><td>Northern Cape</td><td>62</td><td>38.7%</td><td>45.2%</td></tr>
-        <tr><td>North West</td><td>202</td><td>38.6%</td><td>44.6%</td></tr>
-        <tr><td>KwaZulu-Natal</td><td>1,165</td><td><span style="color:var(--accent2)">38.2%</span></td><td>43.1%</td></tr>
-      </table>
-    </div>
-  </div>
-
-  <div class="insight-grid">
-    <div class="insight warn">
-      <div class="insight-head">⚠ Mobile is 56% — but trailing</div>
-      <div class="insight-body">Most learners use mobile (3,808 enrollments) yet complete at only 36.2% vs 47.8% for desktop. A 11.5pt gap on the majority audience is a critical product risk.</div>
-    </div>
-    <div class="insight">
-      <div class="insight-head">✅ 35–44 age group leads</div>
-      <div class="insight-body">This group has the highest completion (42.1%) despite not being the largest segment — likely higher career motivation and focused learning habits.</div>
-    </div>
-    <div class="insight note">
-      <div class="insight-head">📌 Gauteng dominates volume</div>
-      <div class="insight-body">Gauteng has 2,360 enrollments (34.7% of total) but ranks 6th in completion. Improving this province's completion rate would have the highest absolute impact.</div>
-    </div>
-  </div>
-</div>
-
-<!-- ===== DROP-OFF ===== -->
-<div class="section" id="dropoff">
-  <div class="section-title">Drop-off Analysis</div>
-  <div class="section-desc">Where learners are lost across the journey and which courses, devices, and age groups drive the highest attrition.</div>
-
-  <div class="grid-2">
-    <div class="card">
-      <div class="card-title">Drop-off by Journey Stage</div>
-      <div class="card-sub">Where in the journey learners disengage</div>
-      <div class="chart-wrap"><canvas id="dropoffChart" height="240"></canvas></div>
-    </div>
-    <div class="card">
-      <div class="card-title">Drop-off Rate by Course</div>
-      <div class="card-sub">% of enrollees who did not complete</div>
-      <div class="chart-wrap"><canvas id="dropCourseChart" height="240"></canvas></div>
-    </div>
-  </div>
-
-  <div class="grid-3">
-    <div class="card">
-      <div class="card-title">Drop-off by Device</div>
-      <div class="card-sub">Mobile leads attrition</div>
-      <table>
-        <tr><th>Device</th><th>Drop-off Rate</th></tr>
-        <tr><td>📱 Mobile</td><td><div class="pbar-wrap"><div class="pbar"><div class="pbar-fill" style="width:63.76%;background:var(--accent2)"></div></div><div class="pbar-val">63.8%</div></div></td></tr>
-        <tr><td>📟 Tablet</td><td><div class="pbar-wrap"><div class="pbar"><div class="pbar-fill" style="width:57.38%;background:var(--accent3)"></div></div><div class="pbar-val">57.4%</div></div></td></tr>
-        <tr><td>🖥 Desktop</td><td><div class="pbar-wrap"><div class="pbar"><div class="pbar-fill" style="width:52.25%;background:var(--accent4)"></div></div><div class="pbar-val">52.3%</div></div></td></tr>
-      </table>
-    </div>
-    <div class="card">
-      <div class="card-title">Drop-off by Age Group</div>
-      <div class="card-sub">Relatively uniform across age</div>
-      <table>
-        <tr><th>Age Group</th><th>Drop-off Rate</th></tr>
-        <tr><td>25–34</td><td><div class="pbar-wrap"><div class="pbar"><div class="pbar-fill" style="width:59.98%;background:var(--accent2)"></div></div><div class="pbar-val">60.0%</div></div></td></tr>
-        <tr><td>45+</td><td><div class="pbar-wrap"><div class="pbar"><div class="pbar-fill" style="width:59.38%;background:var(--accent3)"></div></div><div class="pbar-val">59.4%</div></div></td></tr>
-        <tr><td>18–24</td><td><div class="pbar-wrap"><div class="pbar"><div class="pbar-fill" style="width:58.62%;background:var(--accent3)"></div></div><div class="pbar-val">58.6%</div></div></td></tr>
-        <tr><td>35–44</td><td><div class="pbar-wrap"><div class="pbar"><div class="pbar-fill" style="width:57.89%;background:var(--accent4)"></div></div><div class="pbar-val">57.9%</div></div></td></tr>
-      </table>
-    </div>
-    <div class="card">
-      <div class="card-title">Journey Stage Breakdown</div>
-      <div class="card-sub">Share of all 6,800 enrollments</div>
-      <table>
-        <tr><th>Stage</th><th>Count</th><th>Share</th></tr>
-        <tr><td>Enrolled not started</td><td>3,100</td><td><span style="color:var(--accent2)">45.6%</span></td></tr>
-        <tr><td>Completed ✅</td><td>2,778</td><td><span style="color:var(--accent)">40.9%</span></td></tr>
-        <tr><td>Dropped mid-course</td><td>529</td><td>7.8%</td></tr>
-        <tr><td>Dropped after 1st lesson</td><td>207</td><td>3.0%</td></tr>
-        <tr><td>Active no completion</td><td>111</td><td>1.6%</td></tr>
-        <tr><td>Dropped after enrollment</td><td>75</td><td>1.1%</td></tr>
-      </table>
-    </div>
-  </div>
-
-  <div class="insight-grid">
-    <div class="insight warn">
-      <div class="insight-head">🔴 45.6% never start</div>
-      <div class="insight-body">"Enrolled not started" is by far the largest drop-off bucket. Email sequences, push notifications, or a better course start experience could directly recover this cohort.</div>
-    </div>
-    <div class="insight warn">
-      <div class="insight-head">⚠ Advanced courses: 74–77% dropout</div>
-      <div class="insight-body">Python, A/B Testing, and Cohort Analysis have the worst dropout rates. These learners may be enrolling out of curiosity but lack the prerequisite skills to persist.</div>
-    </div>
-    <div class="insight note">
-      <div class="insight-head">📌 Mid-course drop is manageable</div>
-      <div class="insight-body">Only 7.8% drop mid-course. This is a solvable problem with progress reminders, milestone celebrations, or cohort-based check-ins at the halfway point.</div>
-    </div>
-  </div>
-</div>
-
-</main>
-
-<footer>
-  <div>Jozication LMS Analytics · Product Analyst Report · 2024–2025</div>
-  <div>Built with Chart.js · Data: SQLite / Python pipeline · 6,800 enrollment records</div>
-</footer>
 
 <script>
-// NAV
-function showSection(id) {
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+function showSection(id, button) {
+  document.querySelectorAll('.section').forEach((section) => section.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach((navButton) => navButton.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  event.target.classList.add('active');
+  if (button) button.classList.add('active');
 }
 
-// CHART DEFAULTS
-Chart.defaults.color = '#6b7494';
-Chart.defaults.borderColor = '#1e2535';
-Chart.defaults.font.family = "'DM Mono', monospace";
+Chart.defaults.color = '#5b6472';
+Chart.defaults.borderColor = 'rgba(148, 163, 184, 0.22)';
+Chart.defaults.font.family = "'Plus Jakarta Sans', sans-serif";
 Chart.defaults.font.size = 11;
+Chart.defaults.plugins.legend.labels.usePointStyle = true;
+Chart.defaults.plugins.legend.labels.boxWidth = 10;
+Chart.defaults.plugins.legend.labels.boxHeight = 10;
 
-const ACCENT = '#00e5c4';
-const ACCENT2 = '#ff6b6b';
-const ACCENT3 = '#f5c842';
-const ACCENT4 = '#7c85ff';
-const MUTED = '#6b7494';
+const GRID = 'rgba(148, 163, 184, 0.22)';
+const BLUE = '#3b82f6';
+const BLUE_LIGHT = 'rgba(59, 130, 246, 0.12)';
+const GREEN = '#10b981';
+const GREEN_LIGHT = 'rgba(16, 185, 129, 0.14)';
+const SKY = '#0ea5e9';
+const AMBER = '#f59e0b';
+const RED = '#ef4444';
+const SLATE = '#94a3b8';
 
-// MONTHLY CHART
+const axisDefaults = {
+  ticks: { color: '#64748b' },
+  grid: { color: GRID },
+  border: { color: GRID }
+};
 new Chart(document.getElementById('monthlyChart'), {
   type: 'line',
   data: {
-    labels: ['Jan24','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec','Jan25','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec25'],
+    labels: ['Jan24', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan25', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec25'],
     datasets: [
-      { label: 'Enrollments', data: [41,134,233,289,309,272,275,260,254,300,324,334,307,244,260,237,291,279,309,305,266,276,311,690], borderColor: ACCENT4, backgroundColor: 'rgba(124,133,255,0.08)', fill: true, tension: 0.4, pointRadius: 2 },
-      { label: 'Completions', data: [1,8,37,74,113,117,114,108,114,112,110,123,141,125,105,117,121,99,106,123,122,103,125,122], borderColor: ACCENT, backgroundColor: 'rgba(0,229,196,0.08)', fill: true, tension: 0.4, pointRadius: 2 }
+      { label: 'Enrollments', data: [41, 134, 233, 289, 309, 272, 275, 260, 254, 300, 324, 334, 307, 244, 260, 237, 291, 279, 309, 305, 266, 276, 311, 690], borderColor: BLUE, backgroundColor: BLUE_LIGHT, fill: true, tension: 0.35, pointRadius: 2.5, pointHoverRadius: 4 },
+      { label: 'Completions', data: [1, 8, 37, 74, 113, 117, 114, 108, 114, 112, 110, 123, 141, 125, 105, 117, 121, 99, 106, 123, 122, 103, 125, 122], borderColor: GREEN, backgroundColor: GREEN_LIGHT, fill: true, tension: 0.35, pointRadius: 2.5, pointHoverRadius: 4 }
     ]
   },
-  options: { responsive: true, plugins: { legend: { position: 'top' } }, scales: { y: { beginAtZero: true } } }
+  options: { responsive: true, plugins: { legend: { position: 'top' } }, scales: { x: axisDefaults, y: { ...axisDefaults, beginAtZero: true } } }
 });
 
-// FUNNEL CHART
 new Chart(document.getElementById('funnelChart'), {
   type: 'bar',
-  data: {
-    labels: ['Enroll\nRate', 'Activation\nRate', 'Active\nRate', 'Completion\nRate'],
-    datasets: [{ data: [73.6, 54.4, 85.2, 88.1], backgroundColor: [ACCENT4, ACCENT3, '#ff9f43', ACCENT2], borderRadius: 4 }]
-  },
-  options: { indexAxis: 'y', responsive: true, plugins: { legend: { display: false } }, scales: { x: { max: 100, ticks: { callback: v => v + '%' } } } }
+  data: { labels: ['Enroll\nRate', 'Activation\nRate', 'Active\nRate', 'Completion\nRate'], datasets: [{ data: [73.6, 54.4, 85.2, 88.1], backgroundColor: [BLUE, SKY, GREEN, '#22c55e'], borderRadius: 8 }] },
+  options: { indexAxis: 'y', responsive: true, plugins: { legend: { display: false } }, scales: { y: axisDefaults, x: { ...axisDefaults, max: 100, ticks: { callback: (value) => value + '%' } } } }
 });
 
-// COURSE COMPLETION CHART
-const courseNames = ['Excel Ops','Dashboard Execs','Data Literacy','Product Analytics','Cust Research','Power BI','SQL Metrics','Cohort Analysis','A/B Testing','Python Auto'];
-const courseColors = [ACCENT,ACCENT,ACCENT,ACCENT3,ACCENT3,ACCENT3,ACCENT3,ACCENT2,ACCENT2,ACCENT2];
+const courseNames = ['Excel Ops', 'Dashboard Execs', 'Data Literacy', 'Product Analytics', 'Cust Research', 'Power BI', 'SQL Metrics', 'Cohort Analysis', 'A/B Testing', 'Python Auto'];
+const courseColors = [GREEN, GREEN, GREEN, BLUE, BLUE, BLUE, BLUE, RED, RED, RED];
+
 new Chart(document.getElementById('courseCompChart'), {
   type: 'bar',
-  data: {
-    labels: courseNames,
-    datasets: [{ data: [60.16,59.85,59.72,43.92,41.87,41.82,39.48,25.9,23.44,23.21], backgroundColor: courseColors, borderRadius: 4 }]
-  },
-  options: { indexAxis: 'y', responsive: true, plugins: { legend: { display: false } }, scales: { x: { max: 70, ticks: { callback: v => v + '%' } } } }
+  data: { labels: courseNames, datasets: [{ data: [60.16, 59.85, 59.72, 43.92, 41.87, 41.82, 39.48, 25.9, 23.44, 23.21], backgroundColor: courseColors, borderRadius: 8 }] },
+  options: { indexAxis: 'y', responsive: true, plugins: { legend: { display: false } }, scales: { y: axisDefaults, x: { ...axisDefaults, max: 70, ticks: { callback: (value) => value + '%' } } } }
 });
 
 new Chart(document.getElementById('courseSatChart'), {
   type: 'bar',
-  data: {
-    labels: courseNames,
-    datasets: [{ data: [3.83,3.83,3.81,3.31,3.24,3.31,3.22,2.74,2.69,2.65], backgroundColor: courseColors, borderRadius: 4 }]
-  },
-  options: { indexAxis: 'y', responsive: true, plugins: { legend: { display: false } }, scales: { x: { min: 0, max: 5 } } }
+  data: { labels: courseNames, datasets: [{ data: [3.83, 3.83, 3.81, 3.31, 3.24, 3.31, 3.22, 2.74, 2.69, 2.65], backgroundColor: courseColors, borderRadius: 8 }] },
+  options: { indexAxis: 'y', responsive: true, plugins: { legend: { display: false } }, scales: { y: axisDefaults, x: { ...axisDefaults, min: 0, max: 5 } } }
 });
 
-// SESSIONS CHART
 new Chart(document.getElementById('sessionsChart'), {
   type: 'bar',
-  data: {
-    labels: ['1–2 sessions', '3–5 sessions', '6–8 sessions', '9+ sessions'],
-    datasets: [
-      { label: 'Completion Rate', data: [0, 0, 96.7, 99.9], backgroundColor: [ACCENT2, ACCENT3, ACCENT, ACCENT], borderRadius: 4 }
-    ]
-  },
-  options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { max: 105, ticks: { callback: v => v + '%' } } } }
+  data: { labels: ['1-2 sessions', '3-5 sessions', '6-8 sessions', '9+ sessions'], datasets: [{ label: 'Completion Rate', data: [0, 0, 96.7, 99.9], backgroundColor: [RED, AMBER, BLUE, GREEN], borderRadius: 8 }] },
+  options: { responsive: true, plugins: { legend: { display: false } }, scales: { x: axisDefaults, y: { ...axisDefaults, max: 105, ticks: { callback: (value) => value + '%' } } } }
 });
 
-// RETENTION CHART
 new Chart(document.getElementById('retentionChart'), {
   type: 'line',
-  data: {
-    labels: ['Day 1', 'Day 7', 'Day 14', 'Day 30'],
-    datasets: [{ label: 'Retention Rate', data: [48.3, 45.7, 41.9, 34.7], borderColor: ACCENT, backgroundColor: 'rgba(0,229,196,0.1)', fill: true, tension: 0.4, pointBackgroundColor: ACCENT, pointRadius: 5 }]
-  },
-  options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { min: 20, max: 60, ticks: { callback: v => v + '%' } } } }
+  data: { labels: ['Day 1', 'Day 7', 'Day 14', 'Day 30'], datasets: [{ label: 'Retention Rate', data: [48.3, 45.7, 41.9, 34.7], borderColor: BLUE, backgroundColor: BLUE_LIGHT, fill: true, tension: 0.35, pointBackgroundColor: GREEN, pointBorderColor: '#ffffff', pointBorderWidth: 2, pointRadius: 5 }] },
+  options: { responsive: true, plugins: { legend: { display: false } }, scales: { x: axisDefaults, y: { ...axisDefaults, min: 20, max: 60, ticks: { callback: (value) => value + '%' } } } }
 });
 
-// DEVICE CHART
 new Chart(document.getElementById('deviceChart'), {
   type: 'doughnut',
-  data: {
-    labels: ['Desktop 47.8%', 'Mobile 36.2%', 'Tablet 42.6%'],
-    datasets: [{ data: [47.75, 36.24, 42.62], backgroundColor: [ACCENT, ACCENT2, ACCENT3], borderWidth: 0 }]
-  },
+  data: { labels: ['Desktop 47.8%', 'Mobile 36.2%', 'Tablet 42.6%'], datasets: [{ data: [47.75, 36.24, 42.62], backgroundColor: [GREEN, BLUE, SKY], borderColor: '#ffffff', borderWidth: 4 }] },
   options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
 });
 
-// REGION CHART
 new Chart(document.getElementById('regionChart'), {
   type: 'bar',
-  data: {
-    labels: ['E. Cape','Limpopo','W. Cape','Free State','Mpum.','Gauteng','N. Cape','N. West','KZN'],
-    datasets: [{ data: [43.98,42.45,42.34,40.97,40.68,40.55,38.71,38.61,38.2], backgroundColor: [ACCENT,ACCENT,ACCENT,ACCENT3,ACCENT3,ACCENT3,ACCENT2,ACCENT2,ACCENT2], borderRadius: 3 }]
-  },
-  options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { min: 30, max: 50, ticks: { callback: v => v + '%' } } } }
+  data: { labels: ['E. Cape', 'Limpopo', 'W. Cape', 'Free State', 'Mpum.', 'Gauteng', 'N. Cape', 'N. West', 'KZN'], datasets: [{ data: [43.98, 42.45, 42.34, 40.97, 40.68, 40.55, 38.71, 38.61, 38.2], backgroundColor: [GREEN, GREEN, BLUE, BLUE, BLUE, BLUE, AMBER, AMBER, RED], borderRadius: 8 }] },
+  options: { responsive: true, plugins: { legend: { display: false } }, scales: { x: axisDefaults, y: { ...axisDefaults, min: 30, max: 50, ticks: { callback: (value) => value + '%' } } } }
 });
 
-// AGE CHART
 new Chart(document.getElementById('ageChart'), {
   type: 'bar',
-  data: {
-    labels: ['35–44', '18–24', '45+', '25–34'],
-    datasets: [{ data: [42.11, 41.38, 40.63, 40.02], backgroundColor: [ACCENT, ACCENT4, ACCENT3, ACCENT2], borderRadius: 3 }]
-  },
-  options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { min: 35, max: 45, ticks: { callback: v => v + '%' } } } }
+  data: { labels: ['35-44', '18-24', '45+', '25-34'], datasets: [{ data: [42.11, 41.38, 40.63, 40.02], backgroundColor: [GREEN, BLUE, SKY, RED], borderRadius: 8 }] },
+  options: { responsive: true, plugins: { legend: { display: false } }, scales: { x: axisDefaults, y: { ...axisDefaults, min: 35, max: 45, ticks: { callback: (value) => value + '%' } } } }
 });
 
-// DROP-OFF PIE
 new Chart(document.getElementById('dropoffChart'), {
   type: 'doughnut',
-  data: {
-    labels: ['Never Started (45.6%)', 'Completed (40.9%)', 'Dropped Mid (7.8%)', 'After 1st Lesson (3.0%)', 'Active No Comp (1.6%)', 'Post Enroll (1.1%)'],
-    datasets: [{ data: [3100, 2778, 529, 207, 111, 75], backgroundColor: [ACCENT2, ACCENT, ACCENT3, '#ff9f43', ACCENT4, MUTED], borderWidth: 0 }]
-  },
+  data: { labels: ['Never Started (45.6%)', 'Completed (40.9%)', 'Dropped Mid (7.8%)', 'After First Lesson (3.0%)', 'Active No Completion (1.6%)', 'Post Enroll (1.1%)'], datasets: [{ data: [3100, 2778, 529, 207, 111, 75], backgroundColor: [RED, GREEN, AMBER, '#fb7185', BLUE, SLATE], borderColor: '#ffffff', borderWidth: 4 }] },
   options: { responsive: true, plugins: { legend: { position: 'right', labels: { boxWidth: 12, font: { size: 10 } } } } }
 });
 
-// DROP-OFF COURSE CHART
 new Chart(document.getElementById('dropCourseChart'), {
   type: 'bar',
-  data: {
-    labels: ['Python Auto','A/B Testing','Cohort Analysis','SQL Metrics','Power BI','Cust Research','Product Fund.','Data Literacy','Dashboard Execs','Excel Ops'],
-    datasets: [{ data: [76.79,76.56,74.1,60.52,58.18,58.13,56.08,40.28,40.15,39.84], backgroundColor: d => d.dataIndex < 3 ? ACCENT2 : d.dataIndex < 7 ? ACCENT3 : ACCENT, borderRadius: 3 }]
-  },
-  options: { indexAxis: 'y', responsive: true, plugins: { legend: { display: false } }, scales: { x: { max: 85, ticks: { callback: v => v + '%' } } } }
+  data: { labels: ['Python Auto', 'A/B Testing', 'Cohort Analysis', 'SQL Metrics', 'Power BI', 'Cust Research', 'Product Fund.', 'Data Literacy', 'Dashboard Execs', 'Excel Ops'], datasets: [{ data: [76.79, 76.56, 74.1, 60.52, 58.18, 58.13, 56.08, 40.28, 40.15, 39.84], backgroundColor: (ctx) => ctx.dataIndex < 3 ? RED : ctx.dataIndex < 7 ? AMBER : GREEN, borderRadius: 8 }] },
+  options: { indexAxis: 'y', responsive: true, plugins: { legend: { display: false } }, scales: { y: axisDefaults, x: { ...axisDefaults, max: 85, ticks: { callback: (value) => value + '%' } } } }
 });
 
-// HEATMAP
 const cohortData = [
-  ['2024-01',0.4634,0.4634,0.3902,0.2439],
-  ['2024-02',0.4254,0.4627,0.4030,0.3433],
-  ['2024-03',0.4764,0.4635,0.4549,0.3777],
-  ['2024-04',0.5052,0.4637,0.4118,0.3287],
-  ['2024-05',0.4951,0.4563,0.4498,0.3745],
-  ['2024-06',0.5106,0.4693,0.4253,0.3507],
-  ['2024-07',0.4946,0.4696,0.4155,0.3495],
-  ['2024-08',0.4813,0.4565,0.4038,0.3343],
-  ['2024-09',0.5158,0.4802,0.4130,0.3532],
-  ['2024-10',0.4957,0.4500,0.4043,0.3457],
-  ['2024-11',0.5033,0.4570,0.4007,0.3395],
-  ['2024-12',0.4978,0.4575,0.4067,0.3413],
+  ['2024-01', 0.4634, 0.4634, 0.3902, 0.2439],
+  ['2024-02', 0.4254, 0.4627, 0.4030, 0.3433],
+  ['2024-03', 0.4764, 0.4635, 0.4549, 0.3777],
+  ['2024-04', 0.5052, 0.4637, 0.4118, 0.3287],
+  ['2024-05', 0.4951, 0.4563, 0.4498, 0.3745],
+  ['2024-06', 0.5106, 0.4693, 0.4253, 0.3507],
+  ['2024-07', 0.4946, 0.4696, 0.4155, 0.3495],
+  ['2024-08', 0.4813, 0.4565, 0.4038, 0.3343],
+  ['2024-09', 0.5158, 0.4802, 0.4130, 0.3532],
+  ['2024-10', 0.4957, 0.4500, 0.4043, 0.3457],
+  ['2024-11', 0.5033, 0.4570, 0.4007, 0.3395],
+  ['2024-12', 0.4978, 0.4575, 0.4067, 0.3413]
 ];
 
 function rateToColor(rate) {
-  const r = Math.min(Math.max(rate, 0), 1);
-  if (r >= 0.5) return { bg: `rgba(0,229,196,${0.3 + r * 0.5})`, col: '#e8eaf0' };
-  if (r >= 0.4) return { bg: `rgba(245,200,66,${0.2 + r * 0.6})`, col: '#0a0c10' };
-  return { bg: `rgba(255,107,107,${0.2 + r * 0.6})`, col: '#e8eaf0' };
+  const bounded = Math.min(Math.max(rate, 0), 1);
+  if (bounded >= 0.5) return { bg: `rgba(16, 185, 129, ${0.18 + bounded * 0.5})`, color: '#064e3b' };
+  if (bounded >= 0.4) return { bg: `rgba(59, 130, 246, ${0.14 + bounded * 0.45})`, color: '#1e3a8a' };
+  return { bg: `rgba(239, 68, 68, ${0.12 + bounded * 0.45})`, color: '#7f1d1d' };
 }
 
-let hmHtml = '<div class="hm-header"><div class="hm-col-label">Day 1</div><div class="hm-col-label">Day 7</div><div class="hm-col-label">Day 14</div><div class="hm-col-label">Day 30</div></div>';
-cohortData.forEach(row => {
-  hmHtml += `<div class="hm-row"><div class="hm-label">${row[0]}</div>`;
-  [row[1],row[2],row[3],row[4]].forEach(v => {
-    const c = rateToColor(v);
-    hmHtml += `<div class="hm-cell" style="background:${c.bg};color:${c.col}">${(v*100).toFixed(1)}%</div>`;
+let heatmapHtml = '<div class="hm-header"><div class="hm-col-label">Day 1</div><div class="hm-col-label">Day 7</div><div class="hm-col-label">Day 14</div><div class="hm-col-label">Day 30</div></div>';
+cohortData.forEach((row) => {
+  heatmapHtml += `<div class="hm-row"><div class="hm-label">${row[0]}</div>`;
+  [row[1], row[2], row[3], row[4]].forEach((value) => {
+    const color = rateToColor(value);
+    heatmapHtml += `<div class="hm-cell" style="background:${color.bg};color:${color.color};">${(value * 100).toFixed(1)}%</div>`;
   });
-  hmHtml += '</div>';
+  heatmapHtml += '</div>';
 });
-document.getElementById('heatmapWrap').innerHTML = hmHtml;
+document.getElementById('heatmapWrap').innerHTML = heatmapHtml;
 </script>
 </body>
 </html>
