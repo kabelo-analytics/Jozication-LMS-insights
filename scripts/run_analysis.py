@@ -224,19 +224,21 @@ def build_summary_markdown(
 - Total enrollments: {int(kpi["total_enrollments"]):,}
 - Completion rate: {kpi["completion_rate"]:.2%}
 - Drop-off rate: {kpi["drop_off_rate"]:.2%}
-- Retention rate: {kpi["retention_rate"]:.2%}
+- Day 30 retention: {day_30:.2%}
+- Multi-checkpoint return rate: {kpi["multi_checkpoint_return_rate"]:.2%}
 - Average satisfaction: {kpi["average_satisfaction"]:.2f}
 
 ## Highlights
-- The strongest course by completion rate is "{top_course["course_name"]}" at {top_course["completion_rate_pct"]:.2f}% completion.
-- The weakest course by completion rate is "{low_course["course_name"]}" at {low_course["completion_rate_pct"]:.2f}% completion, reinforcing the synthetic difficulty penalty.
-- Day 30 retention settles at {day_30:.2%}, showing a realistic decline from early return behaviour.
-- The leading learner segment in the segmentation output is {best_segment["region"]} / {best_segment["age_group"]} / {best_segment["device_type"]}, with {best_segment["completion_rate_pct"]:.2f}% completion.
+- The strongest course by completion rate is "{top_course["course_name"]}" at {top_course["completion_rate_pct"]:.2f}%.
+- The weakest course by completion rate is "{low_course["course_name"]}" at {low_course["completion_rate_pct"]:.2f}%.
+- The largest funnel loss happens before course start, not later in the learning journey.
+- Among segments with at least 40 enrollments, the strongest combination in the current output is {best_segment["region"]} / {best_segment["age_group"]} / {best_segment["device_type"]}, with {best_segment["completion_rate_pct"]:.2f}% completion.
 
 ## Interpretation
-- Activation is materially higher than completion, so the major product risk sits in sustaining momentum after first lesson.
-- Desktop learners generally outperform mobile learners on completion and engagement, which suggests friction in the mobile learning experience.
-- Advanced courses carry higher drop-off and lower satisfaction than beginner courses, which is the expected pattern for a realistic LMS journey.
+- Activation is the clearest operational bottleneck in the current synthetic model.
+- Mobile learners underperform desktop learners on both completion and engagement, so device experience is worth watching.
+- Advanced courses underperform beginner courses, which is consistent with the way the dataset is generated.
+- The segment tables are useful for spotting broad patterns, but very small cells should not drive decisions on their own.
 """
     (DOCS_DIR / "analysis_summary.md").write_text(summary, encoding="utf-8")
 

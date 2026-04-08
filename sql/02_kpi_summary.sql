@@ -25,10 +25,10 @@ SELECT
     active_learners,
     completed_learners,
     ROUND(average_satisfaction, 2) AS average_satisfaction,
-    ROUND(total_enrollments * 1.0 / total_visitors, 4) AS enrollment_rate,
+    ROUND(total_enrollments * 1.0 / total_visitors, 4) AS derived_enrollment_rate,
     ROUND(started_learners * 1.0 / total_enrollments, 4) AS activation_rate,
     ROUND(active_learners * 1.0 / total_enrollments, 4) AS engagement_rate,
     ROUND(completed_learners * 1.0 / total_enrollments, 4) AS completion_rate,
     ROUND((total_enrollments - completed_learners) * 1.0 / total_enrollments, 4) AS drop_off_rate,
-    ROUND(returning_pairs * 1.0 / total_enrollments, 4) AS retention_rate
+    ROUND(returning_pairs * 1.0 / total_enrollments, 4) AS multi_checkpoint_return_rate
 FROM enrollment_base, visitors, retention_base;

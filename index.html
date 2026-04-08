@@ -252,7 +252,7 @@
       <div class="brand">
         <div class="brand-tag">Learning Analytics Report</div>
         <div class="brand-title">Jozi<span>cation</span> LMS</div>
-        <div class="brand-sub">Executive-ready review of learner acquisition, activation, engagement, completion, and drop-off performance across the 2024 to 2025 reporting period.</div>
+        <div class="brand-sub">A reporting walkthrough of learner activation, engagement, completion, and retention across the 2024 to 2025 synthetic LMS dataset.</div>
       </div>
       <div class="header-meta">
         <div><span>Analyst Lens</span><strong>Product and Learning Analytics</strong></div>
@@ -275,7 +275,7 @@
       <div class="section-header">
         <div>
           <div class="section-title">Executive Overview</div>
-          <div class="section-desc">This summary brings the full learner journey into one view so stakeholders can quickly see where demand is healthy, where conversion slows, and where intervention will return the strongest operational value.</div>
+          <div class="section-desc">This section gives a plain-language summary of the learner journey, with the strongest emphasis on where loss happens and which metrics are solid enough to guide follow-up.</div>
         </div>
         <div class="section-chip">Portfolio case study - static report</div>
       </div>
@@ -307,32 +307,32 @@
           <div class="card-sub">Core funnel conversion rates and current performance status.</div>
           <table>
             <tr><th>Metric</th><th>Rate</th><th>Volume</th><th>Status</th></tr>
-            <tr><td>Enrollment Rate</td><td>73.6%</td><td>6,800 / 9,240 visitors</td><td><span class="badge badge-green">Strong</span></td></tr>
+            <tr><td>Enrollment Rate (derived)</td><td>73.6%</td><td>6,800 / 9,240 assumed visitors</td><td><span class="badge badge-yellow">Assumption</span></td></tr>
             <tr><td>Activation Rate</td><td>54.4%</td><td>3,700 started</td><td><span class="badge badge-blue">In range</span></td></tr>
             <tr><td>Engagement Rate</td><td>46.4%</td><td>3,153 active</td><td><span class="badge badge-blue">In range</span></td></tr>
             <tr><td>Completion Rate</td><td>40.9%</td><td>2,778 completed</td><td><span class="badge badge-yellow">Opportunity</span></td></tr>
-            <tr><td>Retention (Day 30)</td><td>34.7%</td><td>2,358 returned</td><td><span class="badge badge-red">Priority</span></td></tr>
+            <tr><td>Day 30 Retention</td><td>34.7%</td><td>2,358 / 6,800 returned</td><td><span class="badge badge-red">Priority</span></td></tr>
             <tr><td>Average Satisfaction</td><td>3.23 / 5</td><td>All enrollments</td><td><span class="badge badge-yellow">Opportunity</span></td></tr>
           </table>
         </div>
         <div class="card">
           <div class="card-title">Monthly Enrollment vs Completion</div>
-          <div class="card-sub">Monthly volume trend from Jan 2024 to Dec 2025.</div>
+          <div class="card-sub">Monthly volume trend from Jan 2024 to Dec 2025. This is a calendar-month volume view, not a cohort conversion chart.</div>
           <div class="chart-wrap"><canvas id="monthlyChart" height="200"></canvas></div>
         </div>
       </div>
       <div class="insight-grid">
         <div class="insight">
-          <div class="insight-head">Demand remains resilient</div>
-          <div class="insight-body">Visitor-to-enrollment conversion stands at 73.6%, which indicates strong initial interest and effective front-end demand capture.</div>
+          <div class="insight-head">Top-of-funnel demand should be read cautiously</div>
+          <div class="insight-body">The visitor baseline is derived rather than observed, so the enrollment rate is better treated as a supporting ratio than as a headline business KPI.</div>
         </div>
         <div class="insight warn">
-          <div class="insight-head">Activation is the main commercial constraint</div>
-          <div class="insight-body">45.6% of enrolled learners never reach lesson one. That makes onboarding and time-to-first-session the most valuable area for product improvement.</div>
+          <div class="insight-head">Activation is the clearest bottleneck</div>
+          <div class="insight-body">45.6% of enrollments never reach course start. In this model, the biggest practical gap sits between enrollment and first real use.</div>
         </div>
         <div class="insight note">
-          <div class="insight-head">Completion improves once momentum starts</div>
-          <div class="insight-body">Three out of four learners who begin a course ultimately complete it, which suggests the strongest payoff will come from better activation rather than additional acquisition alone.</div>
+          <div class="insight-head">Loss is smaller after active learning begins</div>
+          <div class="insight-body">Once learners move beyond the first steps of the journey, the remaining drop is much smaller. That is why activation deserves more attention than acquisition in this case study.</div>
         </div>
       </div>
     </div>
@@ -385,15 +385,15 @@
       <div class="insight-grid">
         <div class="insight warn">
           <div class="insight-head">Enrollment to start is the weakest gate</div>
-          <div class="insight-body">3,100 learners enroll but do not begin. The evidence points to activation friction rather than a lack of interest or poor course-market fit.</div>
+          <div class="insight-body">3,100 learners enroll but do not begin. In this dataset, that makes activation the clearest early-stage problem to review.</div>
         </div>
         <div class="insight">
           <div class="insight-head">The learning experience holds once started</div>
           <div class="insight-body">Among learners who start, 75% complete. This indicates that course value is being realized after the initial barrier is cleared.</div>
         </div>
         <div class="insight note">
-          <div class="insight-head">Activation is the fastest path to growth</div>
-          <div class="insight-body">A 10% uplift in activation would create roughly 680 additional starters and about 510 more completions without increasing top-of-funnel traffic.</div>
+          <div class="insight-head">Activation is the most practical place to intervene first</div>
+          <div class="insight-body">The funnel suggests that improving course start behaviour would likely matter more than driving additional enrollment volume, although the exact uplift would need separate testing.</div>
         </div>
       </div>
     </div>
@@ -507,8 +507,8 @@
           <div class="insight-body">3,638 learners remain in the 1 to 2 session band with zero completion, making early re-engagement the highest-leverage intervention available.</div>
         </div>
         <div class="insight">
-          <div class="insight-head">Six sessions is the turning point</div>
-          <div class="insight-body">Once learners reach six or more sessions, completion rises to 96% to 100%. The product experience strengthens materially after the early usage hurdle is cleared.</div>
+          <div class="insight-head">Session depth is strongly associated with completion</div>
+          <div class="insight-body">Learners with six or more sessions complete at much higher rates. This is a strong descriptive pattern, though it should not be read as proof that sessions alone cause completion.</div>
         </div>
         <div class="insight note">
           <div class="insight-head">Day 30 retention needs structured reinforcement</div>
@@ -521,7 +521,7 @@
       <div class="section-header">
         <div>
           <div class="section-title">Learner Segmentation</div>
-          <div class="section-desc">Segment analysis highlights where outcomes differ across device, geography, and age so support actions can be targeted where the improvement opportunity is largest.</div>
+          <div class="section-desc">Segment analysis shows where outcomes differ across device, geography, and age. It is most useful for broad patterns, not for over-reading tiny cells.</div>
         </div>
         <div class="section-chip">Audience performance view</div>
       </div>
@@ -572,16 +572,16 @@
       </div>
       <div class="insight-grid">
         <div class="insight warn">
-          <div class="insight-head">Mobile is the biggest segment and the biggest experience gap</div>
-          <div class="insight-body">Mobile accounts for 56% of enrollments but trails desktop by 11.5 percentage points on completion, making it the most commercially important experience gap in the portfolio.</div>
+          <div class="insight-head">Mobile is the clearest broad segment gap</div>
+          <div class="insight-body">Mobile accounts for 56% of enrollments and trails desktop by 11.5 percentage points on completion. That makes it the most useful broad segment to watch in the current output.</div>
         </div>
         <div class="insight">
-          <div class="insight-head">The 35 to 44 cohort leads on outcomes</div>
-          <div class="insight-body">This group records the highest completion rate at 42.1%, suggesting stronger intent, focus, or fit with the current course design.</div>
+          <div class="insight-head">Age differences exist, but they are narrow</div>
+          <div class="insight-body">The 35 to 44 group leads on completion at 42.1%, but the spread across age bands is not large. This is a secondary pattern, not the main story.</div>
         </div>
         <div class="insight note">
-          <div class="insight-head">Gauteng offers the largest absolute upside</div>
-          <div class="insight-body">With 2,360 enrollments, even modest completion gains in Gauteng would generate more finished learners than improvement in most smaller provinces.</div>
+          <div class="insight-head">Large provinces matter more in absolute terms</div>
+          <div class="insight-body">Gauteng has the biggest enrollment base, so small rate changes there would affect more learners in absolute numbers than similar changes in smaller provinces.</div>
         </div>
       </div>
     </div>
@@ -590,7 +590,7 @@
       <div class="section-header">
         <div>
           <div class="section-title">Drop-off Analysis</div>
-          <div class="section-desc">This view isolates where learners exit, which segments are most exposed, and where targeted interventions could recover meaningful volume without additional acquisition spend.</div>
+          <div class="section-desc">This view shows where learners exit the journey and which drop-off points are large enough to matter operationally.</div>
         </div>
         <div class="section-chip">Attrition concentration analysis</div>
       </div>
@@ -652,16 +652,16 @@
           <div class="insight-body">Python, A/B Testing, and Cohort Analysis post dropout rates between 74% and 77%, reinforcing the need for clearer readiness design and progression support.</div>
         </div>
         <div class="insight note">
-          <div class="insight-head">Mid-course attrition is comparatively manageable</div>
-          <div class="insight-body">Only 7.8% of enrollments are lost mid-course, which suggests reminders, milestone reinforcement, and timely check-ins could deliver measurable gains.</div>
+          <div class="insight-head">Mid-course loss is smaller than pre-start loss</div>
+          <div class="insight-body">Only 7.8% of enrollments are lost mid-course. That still matters, but it is not the dominant problem when compared with the non-starter group.</div>
         </div>
       </div>
     </div>
   </main>
 
   <footer>
-    <div><span>Jozication LMS Analytics</span> - Product analytics report for the 2024 to 2025 learner journey.</div>
-    <div>Built with Chart.js - Data pipeline: SQLite and Python - 6,800 enrollment records</div>
+    <div><span>Jozication LMS Analytics</span> - Learning analytics walkthrough for a synthetic 2024 to 2025 learner journey.</div>
+    <div>Built with Chart.js - Analysis assets generated from SQLite and Python - 6,800 enrollment records</div>
   </footer>
 </div>
 

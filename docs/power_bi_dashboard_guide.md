@@ -6,6 +6,10 @@
 - Column chart: `monthly_visitors_enrollment_rate.csv` for visitors vs enrollments.
 - Funnel visual: `funnel_analysis.csv` using `stage` and `stage_volume`.
 
+Notes:
+- Treat visitor-based enrollment rate as a derived reporting assumption, not a core observed KPI.
+- Keep Day 30 retention separate from the broader multi-checkpoint return rate.
+
 ## 2. Learner Funnel
 - Funnel visual: `funnel_analysis.csv`.
 - Table or clustered bar chart: `funnel_analysis.csv` for conversion and drop-off between stages.
@@ -32,6 +36,9 @@
 - Bar charts: `completion_by_age_group.csv`, `completion_by_region.csv`, `completion_by_device_type.csv`.
 - Matrix or heatmap: `segmentation_analysis.csv` by region, age group, and device type.
 - Column chart: `completion_by_device_type.csv` for satisfaction by device.
+
+Notes:
+- Apply a minimum-volume filter before ranking highly specific segments.
 
 ## Recommended Slicers
 - Course

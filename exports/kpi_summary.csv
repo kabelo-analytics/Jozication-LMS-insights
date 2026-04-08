@@ -1,2 +1,2 @@
-total_learners,total_courses,total_enrollments,active_learners,completed_learners,average_satisfaction,enrollment_rate,activation_rate,engagement_rate,completion_rate,drop_off_rate,retention_rate
+total_learners,total_courses,total_enrollments,active_learners,completed_learners,average_satisfaction,derived_enrollment_rate,activation_rate,engagement_rate,completion_rate,drop_off_rate,multi_checkpoint_return_rate
 4200,10,6800,3153,2778,3.23,0.7359,0.5441,0.4637,0.4085,0.5915,0.5376
